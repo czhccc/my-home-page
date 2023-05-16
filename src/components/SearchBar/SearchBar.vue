@@ -49,6 +49,7 @@
     //定义回调函数
     window.baidu = {
       sug: function(json) {
+        console.log(json)
         recommendList.value = json.s
         lastRecommendList.value = json.s
       }

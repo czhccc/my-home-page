@@ -1,13 +1,15 @@
 <template>
   <div class="main-wrap">
     <main class="main-middle-center">
-      <searchBar />
+      <SearchBar />
+      <Clock />
     </main>
   </div>
 </template>
 
 <script setup>
   import SearchBar from './components/SearchBar/SearchBar.vue'
+  import Clock from './components/Clock/Clock.vue'
 
 </script>
 
