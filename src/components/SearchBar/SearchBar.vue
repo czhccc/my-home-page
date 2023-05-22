@@ -1,13 +1,18 @@
 <template>
   <div class="search-wrap">
-    <div class="isVpn">
-      <a-checkbox v-model:checked="isVpn">VPN</a-checkbox>
-    </div>
     <div class="SearchBar">
-      <div class="left">
-        <img class="search-type-img" :src="isVpn?'/src/assets/images/google-icon.png':'/src/assets/images/baidu-icon.png'" alt="">
-        <caret-down-outlined />
-      </div>
+      <a-popover placement="bottom"
+                :getPopupContainer="triggerNode => { return triggerNode.parentNode }"
+      >
+        <template #content>
+          <div class="left" v-for="(item, index) in searchTypeIconList" :key="index">
+            <img class="search-type-img" :src="item.url" @click="changeSearchType(item)" alt="">
+          </div>
+        </template>
+        <div class="left">
+          <img class="search-type-img" :src="currentSearchTypeIcon" alt="">
+        </div>
+      </a-popover>
       <div class="search">
         <input v-model="searchParam" 
                 @blur="searchInputBlur" 
@@ -21,10 +26,10 @@
         <sync-outlined spin @click="clear" class="clear-icon" v-show="searchParam" />
       </div>
       <button class="search-button" @click="e => toSearch()">
-        <img class="search-icon" src="/src/assets/images/search-icon.svg" alt="">
+        <search-outlined class="search-icon" />
       </button>
-      <div class="content" id="content" v-if="searchParam" @mouseenter="recommendMoseenter" @mouseleave="recommendMoseleave">
-        <div class="content-item" v-for="(item, index) in recommendList" :key="index" @click="recommendItemClick(item)">
+      <div class="recommend-content" id="recommend-content" v-if="searchParam" @mouseenter="recommendMoseenter" @mouseleave="recommendMoseleave">
+        <div class="recommend-content-item" v-for="(item, index) in recommendList" :key="index" @click="recommendItemClick(item)">
           {{item}}
         </div>
       </div>
@@ -33,17 +38,31 @@
 </template>
 
 <script setup>
-  import { onMounted, ref } from 'vue'
+  import { onBeforeMount, onMounted, ref } from 'vue'
   import { watchEffect } from 'vue'
-  import axios from 'axios'
-  import { CaretDownOutlined, SyncOutlined } from '@ant-design/icons-vue';
+  import { SyncOutlined, SearchOutlined } from '@ant-design/icons-vue';
+  import axios from 'axios';
   
-  let isVpn = ref(false)
+  let searchTypeIconList = ref([
+    {type: 'google', url: '/src/assets/images/search-type-icons/google-icon.png'},
+    {type: 'baidu', url: '/src/assets/images/search-type-icons/baidu-icon.png'},
+    {type: 'bilibili', url: '/src/assets/images/search-type-icons/bilibili-icon.png'},
+    {type: 'youtube', url: '/src/assets/images/search-type-icons/youtube-icon.png'},
+    {type: 'google-translation', url: '/src/assets/images/search-type-icons/google-translation-icon.png'},
+    {type: 'baidu-translation', url: '/src/assets/images/search-type-icons/baidu-translation-icon.png'},
+    {type: 'pixiv', url: '/src/assets/images/search-type-icons/pixiv-icon.png'},
+  ])
+  let currentSearchTypeIcon = ref('')
+  let currentSearchType = ref('')
   let searchParam = ref('')
 
   let recommendList = ref([])
   let lastRecommendList = ref([])
   let isInRecommend = ref(false)
+
+  onBeforeMount(() => {
+    currentSearchTypeIcon.value = searchTypeIconList.value[0].url
+  })
 
   onMounted(() => {
     //定义回调函数
@@ -64,7 +83,7 @@
     }
   })
 
-  function getRecommendSearchList(param) {
+  function getRecommendSearchList(param) { // 百度关键字推荐接口
     var sugurl = `http://suggestion.baidu.com/su?wd=${param}&cb=window.baidu.sug`
     var script = document.createElement("script")
     script.src = sugurl
@@ -76,11 +95,28 @@
   function toSearch(param='') {
     let theParam = param ? param : searchParam.value
     if (searchParam.value) {
-      isVpn.value ? window.open(`https://www.google.it/search?q=${theParam}`)
-                  : window.open(`https://www.baidu.com/s?ie=utf-8&f=8&rsv_bp=1&rsv_idx=1&tn=baidu&wd=${theParam}`)
+      switch (currentSearchType.value) {
+        case 'google': window.open(`https://www.google.it/search?q=${theParam}`);break;
+        case 'baidu': window.open(`https://www.baidu.com/s?ie=utf-8&f=8&rsv_bp=1&rsv_idx=1&tn=baidu&wd=${theParam}`);break;
+        case 'bilibili': window.open(`https://search.bilibili.com/all?keyword=${theParam}`);break;
+        case 'youtube': window.open(`https://www.youtube.com/results?search_query=${theParam}`);break;
+        case 'google-translation': window.open(`https://translate.google.it/?hl=zh-CN&sl=zh-CN&tl=en&text=${theParam}&op=translate`);break;
+        case 'baidu-translation': window.open(`https://fanyi.baidu.com/translate#zh/en/${theParam}`);break;
+        case 'pixiv': window.open(`https://www.pixiv.net/tags/${theParam}`);break;
+        default: break;
+      }
     } else {
-      isVpn.value ? window.open(`https://www.google.it/`)
-                  : window.open(`https://www.baidu.com/`)
+      switch (currentSearchType.value) {
+        case 'google': window.open(`https://www.google.it/`);break;
+        case 'baidu': window.open(`https://www.baidu.com/`);break;
+        case 'bilibili': window.open(`https://www.bilibili.com/`);break;
+        case 'youtube': window.open(`https://www.youtube.com/`);break;
+        case 'youtube': window.open(`https://www.youtube.com/`);break;
+        case 'google-translation': window.open(`https://translate.google.it/?hl=zh-CN&sl=zh-CN&tl=en&op=translate`);break;
+        case 'baidu-translation': window.open(`https://fanyi.baidu.com/translate`);break;
+        case 'pixiv': window.open(`https://www.pixiv.net/`);break;
+        default: break;
+      }
     }
   }
 
@@ -113,9 +149,20 @@
   function recommendItemClick(item) {
     toSearch(item)
   }
+
+  function changeSearchType(item) {
+    currentSearchTypeIcon.value = item.url
+    currentSearchType.value = item.type
+  }
 </script>
 
 <style scoped lang="less">
+@searchBarWidth: 800px;
+@searchBarHeight: 80px;
+@searchBarLeftWidth: 80px;
+@searchBarRightWidth: 80px;
+@recommendContentHeight: 110;
+
 .search-wrap {
   display: flex;
   flex-direction: column;
@@ -126,43 +173,45 @@
     margin-bottom: 10px;
   }
   .SearchBar {
-    width: 500px;
-    height: 60px;
+    width: @searchBarWidth;
+    height: @searchBarHeight;
     display: flex;
     align-items: center;
     position: relative;
-    border-radius: 30px;
+    border-radius: calc(@searchBarHeight / 2);
     box-shadow: rgba(0, 0, 0, 0.12) 0px 4px 19px 0px;
     .left {
-      min-width: 70px;
-      max-width: 70px;
+      min-width: @searchBarLeftWidth;
+      max-width: @searchBarLeftWidth;
       background-color: white;
-      height: 100%;
+      height: @searchBarHeight;
       border-radius: 50% 0 0 50%;
       display: flex;
       align-items: center;
       justify-content: center;
+      cursor: pointer;
       .search-type-img {
-        width: 40px;
-        height: 40px;
+        width: calc(@searchBarHeight / 3 * 2);
+        height: calc(@searchBarHeight / 3 * 2);
+        border-radius: 50%;
       }
     }
     .search {
-      width: 520px;
+      width: calc(100% - @searchBarLeftWidth - @searchBarRightWidth);
       background-color: white;
-      height: 100%;
+      height: @searchBarHeight;
       position: relative;
       .search-input {
-        height: 100%;
+        vertical-align: middle;
+        height: @searchBarHeight;
         width: calc(100% - 50px);
         box-sizing: border-box;
         background-color: rgb(255, 255, 255);
         border: none;
         outline: none;
         font-weight: 300;
-        padding-left: 20px;
-        padding: 20px;
-        font-size: 24px;
+        padding: 0 20px;
+        font-size: 30px;
         color: rgb(51, 51, 51);
       }
       .clear-icon {
@@ -175,43 +224,48 @@
       }
     }
     .search-button {
-      width: 70px;
+      min-width: @searchBarRightWidth;
+      max-width: @searchBarRightWidth;
       background-color: black;
-      height: 100%;
+      height: @searchBarHeight;
       border-radius: 0 50% 50% 0;
       display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: center;
+      cursor: pointer;
       .search-icon {
-        width: 50%;
-        height: 50%;
+        color: white;
+        font-size: calc(@searchBarHeight / 2);
       }
     }
-    .content {
-      width: 100%;
+    .recommend-content {
+      width: @searchBarWidth;
       top: 110%;
       position: absolute;
       background-color: white;
       border-radius: 30px;
       box-shadow: rgba(0, 0, 0, 0.12) 0px 4px 19px 0px;
-      .content-item {
+      .recommend-content-item {
         cursor: pointer;
-        height: 40px;
-        line-height: 40px;
-        padding-left: 90px;
+        height: 50px;
+        line-height: 50px;
+        padding-left: calc(@searchBarLeftWidth + 20px);
+        font-size: 20px;
       }
-      .content-item:hover {
+      .recommend-content-item:hover {
         background-color: rgb(230,230,230);
       }
-      .content-item:first-child:hover {
+      .recommend-content-item:first-child:hover {
         border-radius: 30px 30px 0 0;
       }
-      .content-item:last-child:hover {
+      .recommend-content-item:last-child:hover {
         border-radius: 0 0 30px 30px;
       }
     }
   }
-  
+  :deep(.ant-popover-inner-content) {
+    padding: 0;
+  }
 }
 </style>

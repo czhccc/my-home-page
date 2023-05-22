@@ -18,12 +18,13 @@
 
 .main-wrap {
   background: url('/src/assets/images/back-img.jpg');
+  background-size: 100% 100%;
+  background-repeat: no-repeat;
   width: 100vw;
   height: 100vh;
   .main-middle-center {
     width: 100vw;
     height: 100%;
-    
   }
 }
 </style>

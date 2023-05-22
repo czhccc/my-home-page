@@ -3,18 +3,28 @@
     <canvas id="canvas" width="220" height="220">
       你的浏览器不支持该元素！赶紧下载最新版本浏览器或使用其他浏览器！
     </canvas>
+    <div><b>{{thisYearPassedDays}}</b> ~ <b>{{365-thisYearPassedDays}}</b> ~ <b>{{utilAge29Days}}</b></div>
+    <!-- <div>
+      <div>今年已过<b>{{thisYearPassedDays}}</b>天，还剩<b>{{365-thisYearPassedDays}}</b>天</div>
+      <div>距离29岁只剩<b>{{utilAge29Days}}</b>天</div>
+    </div> -->
   </div>
 </template>
 
 <script setup>
-  import { onMounted } from "vue";
+  import { onMounted, ref } from "vue";
+  
+
+  let thisYearPassedDays = ref(0)
+  let utilAge29Days = ref(0)
 
   onMounted(() => {
     drowClock()
+    getUtilAge29Days()
   })
   
   function drowClock(){
-    let remainingTime = getRemainingTime() // 返回的是还剩余多少天
+    let remainingTime = getPassedTime() // 返回的是还剩余多少天
     let passedTime = 365 - remainingTime // 已经过了多少天
     let passedTimePercentage = passedTime / 365 // 已经过了多少天的百分比
     
@@ -76,7 +86,7 @@
 
     // 开始一条新路径
     context.beginPath();
-    context.fillStyle = "pink";
+    context.fillStyle = "rgb(40,44,52)";
     // 位移到圆心，方便绘制
     context.translate(canvas.width/2, canvas.height/2);
     // 移动到圆心
@@ -91,13 +101,26 @@
   }
 
   // 获取今年的剩余天数
-  function getRemainingTime() { 
+  function getPassedTime() { 
     let date = new Date(); 
     let year = date.getFullYear(); 
     let date2 = new Date(year, 11, 30, 23, 59, 59,999);
     let time = (date2 - date) / 1000; 
     var day = Math.floor(time / (24 * 60 * 60))
+
+    thisYearPassedDays.value = day
+
     return day
+  }
+
+  // 获取29岁的剩余天数
+  function getUtilAge29Days() { 
+    let date = new Date(); 
+    let date2 = new Date('2028-2-6 23:59:59'); 
+    let time = (date2 - date) / 1000; 
+    var day = Math.floor(time / (24 * 60 * 60))
+
+    utilAge29Days.value = day
   }
   
 </script>
@@ -107,5 +130,10 @@
   position: fixed;
   left: 10px;
   top: 10px;
+  text-align: center;
+  padding-bottom: 10px;
+  border-radius: 20px;
+  border: 1px solid rgb(177, 176, 176);
+  box-shadow: rgba(0, 0, 0, 0.12) 0px 4px 19px 0px;
 }
 </style>
