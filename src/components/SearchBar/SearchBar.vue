@@ -26,6 +26,7 @@
         <sync-outlined spin @click="clear" class="clear-icon" v-show="searchParam" />
       </div>
       <button class="search-button" @click="e => toSearch()">
+        <div class="search-button-mask"></div>
         <search-outlined class="search-icon" />
       </button>
       <div class="recommend-content" id="recommend-content" v-if="searchParam" @mouseenter="recommendMoseenter" @mouseleave="recommendMoseleave">
@@ -226,17 +227,61 @@
     .search-button {
       min-width: @searchBarRightWidth;
       max-width: @searchBarRightWidth;
-      background-color: black;
       height: @searchBarHeight;
+      // background-color: black;
       border-radius: 0 50% 50% 0;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
+      border: none;
+      padding: 0;
+      position: relative;
       cursor: pointer;
+      .search-button-mask {
+        // position: absolute;
+        min-width: @searchBarRightWidth;
+        max-width: @searchBarRightWidth;
+        height: @searchBarHeight;
+        border-radius: 0 50% 50% 0;
+        backdrop-filter: blur(20px);
+      }
       .search-icon {
         color: white;
         font-size: calc(@searchBarHeight / 2);
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%, -50%);
+      }
+    }
+    .search-button{
+      text-decoration: none;
+      // background: linear-gradient(90deg,#03a9f4,#f441a5,#ffeb3b,#03a9f4);
+      background: linear-gradient(90deg,#f441a5,#FF7F00,#ffeb3b,#17ff17,#45fffc,#03a9f4,#b661fd,#f441a5);
+      background-size: 400%;
+      text-transform: uppercase;
+      box-sizing: border-box;
+      // border-radius: 50px;
+      // z-index: 1;
+    }
+    // .search-button::before{
+    //   content: "";
+    //   position: absolute;
+    //   left: -5px;
+    //   right: -5px;
+    //   top:-5px;
+    //   bottom: -5px;
+    //   // background: linear-gradient(90deg,#03a9f4,#f441a5,#ffeb3b,#03a9f4);
+    //   background: linear-gradient(90deg,#f441a5,#FF7F00,#ffeb3b,#17ff17,#45fffc,#03a9f4,#b661fd,#f441a5);
+    //   background-size: 400%;
+    //   border-radius: 50px;
+    //   filter: blur(100px);
+    //   z-index: -1;
+    // }
+    // .search-button:hover{
+    .search-button{
+      animation: sun 10s linear infinite;
+    }
+    @keyframes sun{
+      100%{
+        background-position: 400% 0;
       }
     }
     .recommend-content {

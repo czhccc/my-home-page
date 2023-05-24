@@ -8,6 +8,13 @@
       <div>今年已过<b>{{thisYearPassedDays}}</b>天，还剩<b>{{365-thisYearPassedDays}}</b>天</div>
       <div>距离29岁只剩<b>{{utilAge29Days}}</b>天</div>
     </div> -->
+
+    <span class="bg-span-1"></span>
+    <span class="bg-span-2"></span>
+    <span class="bg-span-3"></span>
+    <span class="bg-span-4"></span>
+
+    <div class="mask"></div>
   </div>
 </template>
 
@@ -40,8 +47,8 @@
     context.clearRect(0,0,canvas.width,canvas.height);
     //绘制表盘
     context.beginPath(); //开启新路径
-    context.lineWidth = clockDimensions/15;
-    context.strokeStyle = "#A7C0DC";
+    context.lineWidth = clockDimensions/50;
+    context.strokeStyle = "#FFEC8B";
     //绘制表盘圆圈
     context.arc(canvas.width/2,canvas.height/2,clockDimensions,0,Math.PI*2,false);
     context.stroke();//描边绘制 
@@ -132,8 +139,99 @@
   top: 10px;
   text-align: center;
   padding-bottom: 10px;
-  border-radius: 20px;
-  border: 1px solid rgb(177, 176, 176);
+  // border-radius: 20px;
+  // border: 1px solid rgb(177, 176, 176);
   box-shadow: rgba(0, 0, 0, 0.12) 0px 4px 19px 0px;
+  overflow: hidden;
+
+  .mask {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    // backdrop-filter: blur(10px);
+  }
+
+  .bg-span-1 {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 4px;
+    // background: linear-gradient(to right, #ffffff, #17ff8f);
+    background: linear-gradient(to right, #f441a5,#FF7F00,#ffeb3b,#17ff17,#45fffc,#03a9f4,#b661fd,#f441a5);
+    animation: animate1 2s linear infinite;
+  }
+  @keyframes animate1 {
+    0% {
+      transform: translateX(-100%);
+    }
+    100% {
+      transform: translateX(100%);
+    }
+  }
+  .bg-span-2 {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 4px;
+    height: 100%;
+    background: linear-gradient(to bottom, #f441a5,#FF7F00,#ffeb3b,#17ff17,#45fffc,#03a9f4,#b661fd,#f441a5);
+    animation: animate2 2s linear infinite;
+    animation-delay: -1s;
+  }
+  @keyframes animate2 {
+    0% {
+      transform: translateY(-100%);
+    }
+    100% {
+      transform: translateY(100%);
+    }
+  }
+  .bg-span-3 {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 4px;
+    background: linear-gradient(to left, #f441a5,#FF7F00,#ffeb3b,#17ff17,#45fffc,#03a9f4,#b661fd,#f441a5);
+    animation: animate3 2s linear infinite;
+  }
+  @keyframes animate3 {
+    0% {
+      transform: translateX(100%);
+    }
+    100% {
+      transform: translateX(-100%);
+    }
+  }
+  .bg-span-4 {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 4px;
+    height: 100%;
+    background: linear-gradient(to top, #f441a5,#FF7F00,#ffeb3b,#17ff17,#45fffc,#03a9f4,#b661fd,#f441a5);
+    animation: animate4 2s linear infinite;
+    animation-delay: -1s;
+  }
+  @keyframes animate4 {
+    0% {
+      transform: translateY(100%);
+    }
+    100% {
+      transform: translateY(-100%);
+    }
+  }
+}
+.Clock:before {
+  content: '';
+  position: absolute;
+  top: 2px;
+  left: 2px;
+  bottom: 2px;
+  width: 50%;
+  background: rgba(255, 255, 255, 0.05);
 }
 </style>
