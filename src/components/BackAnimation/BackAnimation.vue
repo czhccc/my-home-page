@@ -1,5 +1,7 @@
 <template>
   <div class="BackAnimation">
+
+    <!-- 流星 开始 -->
     <span></span>
     <span></span>
     <span></span>
@@ -10,6 +12,26 @@
     <span></span>
     <span></span>
     <span></span>
+    <!-- 流星 结束 -->
+
+    <!-- 波浪 开始 -->
+    <div class="wave-wrapper">
+      <div>
+        <svg class="waves" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 24 150 28" preserveAspectRatio="none" shape-rendering="auto">
+          <defs>
+            <path id="gentle-wave" d="M-160 44c30 0 58-18 88-18s 58 18 88 18 58-18 88-18 58 18 88 18 v44h-352z" />
+          </defs>
+          <g class="parallax">
+            <use xlink:href="#gentle-wave" x="48" y="0" fill="rgba(255,255,255,0.7" />
+            <use xlink:href="#gentle-wave" x="48" y="3" fill="rgba(255,255,255,0.5)" />
+            <use xlink:href="#gentle-wave" x="48" y="5" fill="rgba(255,255,255,0.3)" />
+            <use xlink:href="#gentle-wave" x="48" y="7" fill="#fff" />
+          </g>
+        </svg>
+      </div>
+    </div>
+    <!-- 波浪 结束 -->
+
   </div>
 </template>
 
@@ -18,44 +40,38 @@
 </script>
 
 <style scoped lang="less">
-// @rainColor: rgba(244,65,165,1);
-// @rainColorTransparent: rgba(244,65,165,0.1);
-@rainColor: rgba(255,255,255,1);
-@rainColorTransparent: rgba(255,255,255,0.1);
+// @meteorColor: rgba(244,65,165,1);
+// @meteorColorTransparent: rgba(244,65,165,0.1);
+@meteorColor: rgba(255,255,255,1);
+@meteorColorTransparent: rgba(255,255,255,0.1);
 .BackAnimation {
   width: 100vw;
   height: 100vh;
-  // background: transparent;
   position: fixed;
   left: 0;
   top: 0;
-  // z-index: -999;
 
+  /* 流星 开始 */
   span{
     position: absolute;
-    top: 50%;
-    left: 50%;
     width: 4px;
     height: 4px;
-    // background-color: #fff;
-    background-color: @rainColor;
     border-radius: 50%;
     /* 发光效果 */
     box-shadow: 0 0 0 4px rgba(255,255,255,0.1),
-    0 0 0 8px @rainColorTransparent,
-    0 0 20px @rainColor;
+    0 0 0 8px @meteorColorTransparent,
+    0 0 20px @meteorColor;
     /* 执行动画 */
     animation: animate 3s linear infinite;
   }
-  /* 拖尾效果 */
-  span::before{
+  span::before{ /* 拖尾效果 */
     content: "";
     position: absolute;
     top: 50%;
     transform: translateY(-50%);
     width: 300px;
     height: 3px;
-    background: linear-gradient(90deg,@rainColor,transparent);
+    background: linear-gradient(90deg,@meteorColor,transparent);
   }
   /* 接下来分别为每一个流星设置位置、动画延迟时间、动画时长 */
   span:nth-child(1){
@@ -131,10 +147,7 @@
     animation-delay: 2.75s;
     animation-duration: 2.25s;
   }
-
-  /* 定义动画 */
-  /* 背景缩放动画 */
-  @keyframes animateBg {
+  @keyframes animateBg { /* 背景缩放动画 */
     0%,100%{
       transform: scale(1);
     }
@@ -142,8 +155,7 @@
       transform: scale(1.2);
     }
   }
-  /* 流星划过动画 */
-  @keyframes animate {
+  @keyframes animate { /* 流星划过动画 */
     0%{
       transform: rotate(315deg) translateX(0);
       opacity: 1;
@@ -156,5 +168,48 @@
       opacity: 0;
     }
   }
+  /* 流星 结束 */
+
+  /* 波浪 开始 */
+  .wave-wrapper {
+    width: 100%;
+    position:absolute;
+    bottom: 0;
+  }
+  .waves {
+    width: 100%;
+    height: 15vh;
+    margin-bottom: -7px; /*Fix for safari gap*/
+    min-height: 100px;
+    max-height: 150px;
+  }
+  .parallax > use {
+    animation: move-forever 25s cubic-bezier(.55,.5,.45,.5) infinite;
+  }
+  .parallax > use:nth-child(1) {
+    animation-delay: -2s;
+    animation-duration: 7s;
+  }
+  .parallax > use:nth-child(2) {
+    animation-delay: -3s;
+    animation-duration: 10s;
+  }
+  .parallax > use:nth-child(3) {
+    animation-delay: -4s;
+    animation-duration: 13s;
+  }
+  .parallax > use:nth-child(4) {
+    animation-delay: -5s;
+    animation-duration: 20s;
+  }
+  @keyframes move-forever {
+    0% {
+      transform: translate3d(-90px,0,0);
+    }
+    100% { 
+      transform: translate3d(85px,0,0);
+    }
+  }
+  /* 波浪 结束 */
 }
 </style>

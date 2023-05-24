@@ -3,7 +3,7 @@
     <canvas id="canvas" width="220" height="220">
       你的浏览器不支持该元素！赶紧下载最新版本浏览器或使用其他浏览器！
     </canvas>
-    <div><b>{{thisYearPassedDays}}</b> ~ <b>{{365-thisYearPassedDays}}</b> ~ <b>{{utilAge29Days}}</b></div>
+    <div class="text"><b>{{thisYearPassedDays}}</b> ~ <b>{{365-thisYearPassedDays}}</b> ~ <b>{{utilAge29Days}}</b></div>
     <!-- <div>
       <div>今年已过<b>{{thisYearPassedDays}}</b>天，还剩<b>{{365-thisYearPassedDays}}</b>天</div>
       <div>距离29岁只剩<b>{{utilAge29Days}}</b>天</div>
@@ -143,7 +143,10 @@
   // border: 1px solid rgb(177, 176, 176);
   box-shadow: rgba(0, 0, 0, 0.12) 0px 4px 19px 0px;
   overflow: hidden;
-
+  background-color: rgba(255, 255, 255, 0.5);
+  .text {
+    color: white;
+  }
   .mask {
     width: 100%;
     height: 100%;
