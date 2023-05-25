@@ -3,24 +3,40 @@
     <canvas id="canvas" width="220" height="220">
       你的浏览器不支持该元素！赶紧下载最新版本浏览器或使用其他浏览器！
     </canvas>
-    <div class="text"><b>{{thisYearPassedDays}}</b> ~ <b>{{365-thisYearPassedDays}}</b> ~ <b>{{utilAge29Days}}</b></div>
+    <!-- <div class="text-wrapper">
+      {{thisYearPassedDays}} ~ {{365-thisYearPassedDays}} ~ {{utilAge29Days}}
+    </div> -->
+    <div class="text-wrapper">
+      <span class="text text1">{{thisYearPassedDays}}</span>
+      ~ 
+      <span class="text text2">{{365-thisYearPassedDays}}</span>
+      ~
+      <span class="text text3">{{utilAge29Days}}</span>
+    </div>
     <!-- <div>
       <div>今年已过<b>{{thisYearPassedDays}}</b>天，还剩<b>{{365-thisYearPassedDays}}</b>天</div>
       <div>距离29岁只剩<b>{{utilAge29Days}}</b>天</div>
     </div> -->
 
+    <!-- 周长动画 -->
     <span class="bg-span-1"></span>
     <span class="bg-span-2"></span>
     <span class="bg-span-3"></span>
     <span class="bg-span-4"></span>
 
     <div class="mask"></div>
+
+    <div class="hourglass-wrapper">
+      <Hourglass />
+    </div>
+    
+
   </div>
 </template>
 
 <script setup>
   import { onMounted, ref } from "vue";
-  
+  import Hourglass from './components/Hourglass/Hourglass.vue'
 
   let thisYearPassedDays = ref(0)
   let utilAge29Days = ref(0)
@@ -133,6 +149,9 @@
 </script>
 
 <style scoped lang="less">
+@canvasWidth: 220px;
+@canvasHeight: 220px;
+
 .Clock {
   position: fixed;
   left: 10px;
@@ -144,8 +163,66 @@
   box-shadow: rgba(0, 0, 0, 0.12) 0px 4px 19px 0px;
   overflow: hidden;
   background-color: rgba(255, 255, 255, 0.5);
-  .text {
-    color: white;
+  
+  // .text-wrapper{
+  //   // color: linear-gradient(to right,red,green);
+  //   color: white;
+  //   /* 将元素裁剪为一个圆形（100px表示圆的直径，0% 50%表示圆心的位置） */
+  //   // clip-path: circle(100px at 0% 50%);
+  //   animation: light 5s infinite;
+  // }
+
+  /* 定义动画 改变圆心的位置 */
+  // @keyframes light{
+  //   0%{
+  //     clip-path: circle(20px at 0% 50%);
+  //   }
+  //   50%{
+  //     clip-path: circle(20px at 100% 50%);
+  //   }
+  //   100%{
+  //     clip-path: circle(20px at 0% 50%);
+  //   }
+  // }
+
+
+  .text-wrapper {
+    .text {
+      color: white;
+      font-weight: bold;
+      color: #111;
+      /* 模糊滤镜 */
+      filter: blur(2px);
+      /* 执行动画：动画名称 时长 线性的 无限次播放 */
+      animation: animate 2.5s linear infinite;
+    }
+    .text1 {
+      animation-delay: 0s;
+    }
+    .text2 {
+      animation-delay: 0.5s;
+    }
+    .text3 {
+      animation-delay: 1s;
+    }
+    /* 文字发光动画 */
+    @keyframes animate {
+      0%,100%{
+        color: #fff;
+        /* 模糊滤镜 */
+        filter: blur(2px);
+        /* 文字阴影 */
+        text-shadow: 
+          0 0 10px white,
+          0 0 20px white,
+          0 0 30px white;
+        }
+      5%,95%{
+        color: #111;
+        filter: blur(0px);
+        text-shadow: none;
+      }
+    }
   }
   .mask {
     width: 100%;
@@ -155,7 +232,21 @@
     left: 0;
     // backdrop-filter: blur(10px);
   }
+  .hourglass-wrapper {
+    width: @canvasWidth;
+    height: @canvasHeight;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: absolute;
+    left: 0;
+    top: 0;
+  }
+}
+</style>
 
+<!-- 周长边框动态条 -->
+<style scoped lang="less">
   .bg-span-1 {
     position: absolute;
     top: 0;
@@ -227,14 +318,4 @@
       transform: translateY(-100%);
     }
   }
-}
-.Clock:before {
-  content: '';
-  position: absolute;
-  top: 2px;
-  left: 2px;
-  bottom: 2px;
-  width: 50%;
-  background: rgba(255, 255, 255, 0.05);
-}
 </style>

@@ -4,6 +4,7 @@
     <main class="main-middle-center">
       <SearchBar />
       <Clock />
+      <Sidebar />
     </main>
   </div>
 </template>
@@ -12,6 +13,7 @@
   import BackAnimation from './components/BackAnimation/BackAnimation.vue'
   import SearchBar from './components/SearchBar/SearchBar.vue'
   import Clock from './components/Clock/Clock.vue'
+  import Sidebar from './components/Sidebar/Sidebar.vue'
 
 </script>
 
