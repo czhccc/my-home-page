@@ -4,20 +4,20 @@
       <div class="mask" @mouseenter="maskMouseEnter"></div>
       <div class="content">
         <ul>
-          <li style="--clr:#00ade1">
-            <a href="#" data-text="&nbsp;Home">&nbsp;Home&nbsp;</a>
+          <li style="--clr:#00ade1" @click="wordMode">
+            <a href="#" data-text="&nbsp;工作模式" :style="{'--activeWidth': isWordMode?'100%':'0%', '--activeShadow': isWordMode?'drop-shadow(0 0 25px var(--clr))':'unset'}">&nbsp;工作模式&nbsp;</a>
           </li>
-          <li style="--clr:#ff6493">
-            <a href="#" data-text="&nbsp;AAA">&nbsp;AAA&nbsp;</a>
+          <li style="--clr:#ff6493" @click="conciseMode">
+            <a href="#" data-text="&nbsp;简约模式" :style="{'--activeWidth': isConciseMode?'100%':'0%', '--activeShadow': isConciseMode?'drop-shadow(0 0 25px var(--clr))':'unset'}">&nbsp;简约模式&nbsp;</a>
           </li>
-          <li style="--clr:#ffdd1c">
-            <a href="#" data-text="&nbsp;BBB">&nbsp;BBB&nbsp;</a>
+          <li style="--clr:#ffdd1c" @click="AAAAMode">
+            <a href="#" data-text="&nbsp;AAAA" :style="{'--activeWidth': isAAAAMode?'100%':'0%', '--activeShadow': isAAAAMode?'drop-shadow(0 0 25px var(--clr))':'unset'}">&nbsp;AAAA&nbsp;</a>
           </li>
-          <li style="--clr:#00dc82">
-            <a href="#" data-text="&nbsp;CCC">&nbsp;CCC&nbsp;</a>
+          <li style="--clr:#00dc82" @click="BBBBMode">
+            <a href="#" data-text="&nbsp;BBBB" :style="{'--activeWidth': isBBBBMode?'100%':'0%', '--activeShadow': isBBBBMode?'drop-shadow(0 0 25px var(--clr))':'unset'}">&nbsp;BBBB&nbsp;</a>
           </li>
-          <li style="--clr:#dc00d4">
-            <a href="#" data-text="&nbsp;DDD">&nbsp;DDD&nbsp;</a>
+          <li style="--clr:#dc00d4" @click="CCCCMode">
+            <a href="#" data-text="&nbsp;CCCC" :style="{'--activeWidth': isCCCCMode?'100%':'0%', '--activeShadow': isCCCCMode?'drop-shadow(0 0 25px var(--clr))':'unset'}">&nbsp;CCCC&nbsp;</a>
           </li>
         </ul>
       </div>
@@ -31,9 +31,31 @@
 
   let isShowSidebar = ref(true)
 
+  let isWordMode = ref(false)
+  let isConciseMode = ref(false)
+  let isAAAAMode = ref(false)
+  let isBBBBMode = ref(false)
+  let isCCCCMode = ref(false)
+
   onMounted(() => {
 
   })
+
+  function wordMode() {
+    isWordMode.value = true
+  }
+  function conciseMode() {
+    isConciseMode.value = true
+  }
+  function AAAAMode() {
+    isAAAAMode.value = true
+  }
+  function BBBBMode() {
+    isBBBBMode.value = true
+  }
+  function CCCCMode() {
+    isCCCCMode.value = true
+  }
 
   function maskMouseEnter() {
     isShowSidebar.value = true
@@ -44,6 +66,7 @@
 </script>
 
 <style scoped lang="less">
+@itemHeight: 40px;
 .Sidebar {
   position: fixed;
   right: 0;
@@ -61,44 +84,52 @@
     .mask {
       flex: 1;
       height: 100%;
-      background-color: rgba(0, 0, 0, 0.5);
+      background-color: rgba(255, 255, 255, 0.5);
     }
     .content {
       width: 400px;
       height: 100%;
-      background-color: black;
+      background-color: white;
+      padding: 20px;
+      box-sizing: border-box;
       ul {
         position: relative;
         display: flex;
         flex-direction: column;
-        gap: 30px;
+        gap: 10px;
+        padding-left: 0;
         li {
           list-style: none;
           position: relative;
           a {
             position: relative;
-            font-size: 4em;
+            font-size: @itemHeight;
+            line-height: @itemHeight;
             text-decoration: none;
-            line-height: 1em;
             letter-spacing: 2px;
             color: transparent;
-            -webkit-text-stroke: 1px rgba(255, 255, 255, 0.5);
+            -webkit-text-stroke: 1px rgba(0, 0, 0, 0.5);
           }
           a::before {
             content: attr(data-text);
             position: absolute;
             color: var(--clr);
             overflow: hidden;
-            width: 0;
-            transition: 1s;
+            // width: 0;
+            transition: 0.5s;
             border-right: 8px solid var(--clr);
             -webkit-text-stroke: 1px var(--clr);
             White-space: nowrap;
           }
           a:hover::before {
             width: 100%;
-            // -webkit-text-stroke: 1px var(--clr);
             filter: drop-shadow(0 0 25px var(--clr));
+            // -webkit-text-stroke: 1px var(--clr);
+          }
+          a::before {
+            width: var(--activeWidth);
+            filter: var(--activeShadow);
+            // -webkit-text-stroke: 1px var(--clr);
           }
         }
       }
