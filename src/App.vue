@@ -2,6 +2,7 @@
   <div class="main-wrap">
     <BackAnimation />
     <main class="main-middle-center">
+      
       <SearchBar />
       <Clock />
       <Sidebar />

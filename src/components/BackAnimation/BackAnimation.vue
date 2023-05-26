@@ -4,9 +4,9 @@
     <!-- <video class="back-video" autoplay muted src="/src/assets/images/back-imgs/aaa.mp4"></video> -->
 
     <!-- 流星 -->
-    <!-- <div class="Meteor-wrapper">
+    <div class="Meteor-wrapper">
       <Meteor />
-    </div> -->
+    </div>
 
     <!-- 波浪 -->
     <!-- <div class="Wave-wrapper">
@@ -18,23 +18,23 @@
       <HelixLoader />
     </div> -->
     
-    <!-- <div class="FireworksTube-wrapper">
+    <div class="FireworksTube-wrapper">
       <FireworksTube />
-    </div> -->
+    </div>
     
     <!-- <div class="ColorfulCircle-wrapper">
       <ColorfulCircle />
-    </div>
+    </div> -->
     
-    <div class="ConveyerBelt-wrapper">
+    <!-- <div class="ConveyerBelt-wrapper">
       <ConveyerBelt />
-    </div>
+    </div> -->
     
-    <div class="BallStairs-wrapper">
+    <!-- <div class="BallStairs-wrapper">
       <BallStairs />
-    </div>
+    </div> -->
     
-    <div class="ThreeSquare-wrapper">
+    <!-- <div class="ThreeSquare-wrapper">
       <ThreeSquare />
     </div> -->
 

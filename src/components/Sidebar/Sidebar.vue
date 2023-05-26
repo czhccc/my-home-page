@@ -1,23 +1,45 @@
 <template>
-  <div class="Sidebar">
+  <div class="Sidebar" :style="{width: isShowSidebar?'100vw':'10px'}"
+  >
     <div class="show" v-if="isShowSidebar">
       <div class="mask" @mouseenter="maskMouseEnter"></div>
       <div class="content">
         <ul>
           <li style="--clr:#00ade1" @click="wordMode">
-            <a href="#" data-text="&nbsp;工作模式" :style="{'--activeWidth': isWordMode?'100%':'0%', '--activeShadow': isWordMode?'drop-shadow(0 0 25px var(--clr))':'unset'}">&nbsp;工作模式&nbsp;</a>
+            <a href="#" data-text="&nbsp;工作模式" :style="{
+              '--activeWidth': isWordMode?'100%':'0%', 
+              '--activeShadow': isWordMode?'drop-shadow(0 0 25px var(--clr))':'unset',
+              '--activeAndHoverWidth': isWordMode?'100%':'50%'
+            }">&nbsp;工作模式&nbsp;
+            </a>
           </li>
           <li style="--clr:#ff6493" @click="conciseMode">
-            <a href="#" data-text="&nbsp;简约模式" :style="{'--activeWidth': isConciseMode?'100%':'0%', '--activeShadow': isConciseMode?'drop-shadow(0 0 25px var(--clr))':'unset'}">&nbsp;简约模式&nbsp;</a>
+            <a href="#" data-text="&nbsp;简约模式" :style="{
+              '--activeWidth': isConciseMode?'100%':'0%', 
+              '--activeShadow': isConciseMode?'drop-shadow(0 0 25px var(--clr))':'unset',
+              '--activeAndHoverWidth': isConciseMode?'100%':'50%'
+            }">&nbsp;简约模式&nbsp;</a>
           </li>
           <li style="--clr:#ffdd1c" @click="AAAAMode">
-            <a href="#" data-text="&nbsp;AAAA" :style="{'--activeWidth': isAAAAMode?'100%':'0%', '--activeShadow': isAAAAMode?'drop-shadow(0 0 25px var(--clr))':'unset'}">&nbsp;AAAA&nbsp;</a>
+            <a href="#" data-text="&nbsp;AAAA" :style="{
+              '--activeWidth': isAAAAMode?'100%':'0%', 
+              '--activeShadow': isAAAAMode?'drop-shadow(0 0 25px var(--clr))':'unset',
+              '--activeAndHoverWidth': isAAAAMode?'100%':'50%'
+            }">&nbsp;AAAA&nbsp;</a>
           </li>
           <li style="--clr:#00dc82" @click="BBBBMode">
-            <a href="#" data-text="&nbsp;BBBB" :style="{'--activeWidth': isBBBBMode?'100%':'0%', '--activeShadow': isBBBBMode?'drop-shadow(0 0 25px var(--clr))':'unset'}">&nbsp;BBBB&nbsp;</a>
+            <a href="#" data-text="&nbsp;BBBB" :style="{
+              '--activeWidth': isBBBBMode?'100%':'0%', 
+              '--activeShadow': isBBBBMode?'drop-shadow(0 0 25px var(--clr))':'unset',
+              '--activeAndHoverWidth': isBBBBMode?'100%':'50%'
+            }">&nbsp;BBBB&nbsp;</a>
           </li>
           <li style="--clr:#dc00d4" @click="CCCCMode">
-            <a href="#" data-text="&nbsp;CCCC" :style="{'--activeWidth': isCCCCMode?'100%':'0%', '--activeShadow': isCCCCMode?'drop-shadow(0 0 25px var(--clr))':'unset'}">&nbsp;CCCC&nbsp;</a>
+            <a href="#" data-text="&nbsp;CCCC" :style="{
+              '--activeWidth': isCCCCMode?'100%':'0%', 
+              '--activeShadow': isCCCCMode?'drop-shadow(0 0 25px var(--clr))':'unset',
+              '--activeAndHoverWidth': isCCCCMode?'100%':'50%'
+            }">&nbsp;CCCC&nbsp;</a>
           </li>
         </ul>
       </div>
@@ -29,7 +51,7 @@
 <script setup>
   import { onMounted, ref } from "vue";
 
-  let isShowSidebar = ref(true)
+  let isShowSidebar = ref(false)
 
   let isWordMode = ref(false)
   let isConciseMode = ref(false)
@@ -42,23 +64,23 @@
   })
 
   function wordMode() {
-    isWordMode.value = true
+    isWordMode.value = !isWordMode.value
   }
   function conciseMode() {
-    isConciseMode.value = true
+    isConciseMode.value = !isConciseMode.value
   }
   function AAAAMode() {
-    isAAAAMode.value = true
+    isAAAAMode.value = !isAAAAMode.value
   }
   function BBBBMode() {
-    isBBBBMode.value = true
+    isBBBBMode.value = !isBBBBMode.value
   }
   function CCCCMode() {
-    isCCCCMode.value = true
+    isCCCCMode.value = !isCCCCMode.value
   }
 
   function maskMouseEnter() {
-    isShowSidebar.value = true
+    isShowSidebar.value = false
   }
   function hiddenAreaMouseEnter() {
     isShowSidebar.value = true
@@ -81,6 +103,7 @@
     display: flex;
     justify-content: flex-end;
     align-items: center;
+    z-index: 999;
     .mask {
       flex: 1;
       height: 100%;
@@ -122,7 +145,8 @@
             White-space: nowrap;
           }
           a:hover::before {
-            width: 100%;
+            // width: 50%;
+            width: var(--activeAndHoverWidth);
             filter: drop-shadow(0 0 25px var(--clr));
             // -webkit-text-stroke: 1px var(--clr);
           }
@@ -138,6 +162,9 @@
   .hiddenArea {
     width: 10px;
     height: 100%;
+    position: fixed;
+    right: 0;
+    top: 0;
   }
 }
 </style>
