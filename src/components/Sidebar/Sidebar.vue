@@ -97,6 +97,7 @@
   height: 100vh;
   display: flex;
   justify-content: flex-end;
+  transition:all 3s;
   .show {
     width: 100%;
     height: 100%;

@@ -52,6 +52,16 @@
   import ConveyerBelt from './components/ConveyerBelt/ConveyerBelt.vue'
   import BallStairs from './components/BallStairs/BallStairs.vue'
   import ThreeSquare from './components/ThreeSquare/ThreeSquare.vue'
+  
+  import { computed } from 'vue'
+  import useMapper from '../../store/useMapper'
+  import { mapState, createNamespacedHelpers } from 'vuex'
+
+  const fullName = computed(() => { mapState(['count']) })
+  console.log(fullName)
+
+
+
 </script>
 
 <style scoped lang="less">
