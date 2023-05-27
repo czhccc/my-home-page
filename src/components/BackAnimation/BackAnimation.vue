@@ -4,7 +4,7 @@
     <!-- <video class="back-video" autoplay muted src="/src/assets/images/back-imgs/aaa.mp4"></video> -->
 
     <!-- 流星 -->
-    <div class="Meteor-wrapper">
+    <div v-if="!storeState.isConciseMode.value" class="Meteor-wrapper">
       <Meteor />
     </div>
 
@@ -18,7 +18,7 @@
       <HelixLoader />
     </div> -->
     
-    <div class="FireworksTube-wrapper">
+    <div v-if="!storeState.isConciseMode.value" class="FireworksTube-wrapper">
       <FireworksTube />
     </div>
     
@@ -39,7 +39,6 @@
     </div> -->
 
 
-
   </div>
 </template>
 
@@ -54,12 +53,9 @@
   import ThreeSquare from './components/ThreeSquare/ThreeSquare.vue'
   
   import { computed } from 'vue'
-  import useMapper from '../../store/useMapper'
-  import { mapState, createNamespacedHelpers } from 'vuex'
+  import { useState } from '../../store/useMapper'
 
-  const fullName = computed(() => { mapState(['count']) })
-  console.log(fullName)
-
+  const storeState = useState(['isConciseMode'])
 
 
 </script>

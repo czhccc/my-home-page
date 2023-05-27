@@ -25,7 +25,11 @@
         >
         <sync-outlined spin @click="clear" class="clear-icon" v-show="searchParam" />
       </div>
-      <button class="search-button" @click="e => toSearch()">
+      <button class="search-button search-button-concise" v-if="storeState.isConciseMode.value" @click="e => toSearch()">
+        <div class="search-button-mask"></div>
+        <search-outlined class="search-icon" />
+      </button>
+      <button class="search-button search-button-colorful" v-if="!storeState.isConciseMode.value" @click="e => toSearch()">
         <div class="search-button-mask"></div>
         <search-outlined class="search-icon" />
       </button>
@@ -42,16 +46,17 @@
   import { onBeforeMount, onMounted, ref } from 'vue'
   import { watchEffect } from 'vue'
   import { SyncOutlined, SearchOutlined } from '@ant-design/icons-vue';
-  import axios from 'axios';
+
+  import { useState } from '../../store/useMapper'
   
   let searchTypeIconList = ref([
-    {type: 'google', url: '/src/assets/images/search-type-icons/google-icon.png'},
-    {type: 'baidu', url: '/src/assets/images/search-type-icons/baidu-icon.png'},
-    {type: 'bilibili', url: '/src/assets/images/search-type-icons/bilibili-icon.png'},
-    {type: 'youtube', url: '/src/assets/images/search-type-icons/youtube-icon.png'},
-    {type: 'google-translation', url: '/src/assets/images/search-type-icons/google-translation-icon.png'},
-    {type: 'baidu-translation', url: '/src/assets/images/search-type-icons/baidu-translation-icon.png'},
-    {type: 'pixiv', url: '/src/assets/images/search-type-icons/pixiv-icon.png'},
+    {type: 'google', url: '/src/assets/images/web-icons/google.png'},
+    {type: 'baidu', url: '/src/assets/images/web-icons/baidu.png'},
+    {type: 'bilibili', url: '/src/assets/images/web-icons/bilibili.png'},
+    {type: 'youtube', url: '/src/assets/images/web-icons/youtube.png'},
+    {type: 'google-translation', url: '/src/assets/images/web-icons/google-translation.png'},
+    {type: 'baidu-translation', url: '/src/assets/images/web-icons/baidu-translation.png'},
+    {type: 'pixiv', url: '/src/assets/images/web-icons/pixiv.png'},
   ])
   let currentSearchTypeIcon = ref('')
   let currentSearchType = ref('')
@@ -60,6 +65,8 @@
   let recommendList = ref([])
   let lastRecommendList = ref([])
   let isInRecommend = ref(false)
+
+  const storeState = useState(['isConciseMode'])
 
   onBeforeMount(() => {
     currentSearchTypeIcon.value = searchTypeIconList.value[0].url
@@ -169,7 +176,6 @@
   flex-direction: column;
   align-items: center;
   position: relative;
-  padding-top: 50px;
   .isVpn {
     margin-bottom: 10px;
   }
@@ -224,16 +230,29 @@
         cursor: pointer;
       }
     }
+    .search-button-concise {
+      background-color: black;
+    }
+    .search-button-colorful {
+      background: linear-gradient(90deg,#f441a5,#FF7F00,#ffeb3b,#17ff17,#45fffc,#03a9f4,#b661fd,#f441a5);
+      background-size: 400%;
+      animation: sun 10s linear infinite;
+      @keyframes sun{
+        100%{
+          background-position: 400% 0;
+        }
+      }
+    }
     .search-button {
       min-width: @searchBarRightWidth;
       max-width: @searchBarRightWidth;
       height: @searchBarHeight;
-      // background-color: black;
       border-radius: 0 50% 50% 0;
       border: none;
       padding: 0;
       position: relative;
       cursor: pointer;
+
       .search-button-mask {
         // position: absolute;
         min-width: @searchBarRightWidth;
@@ -251,39 +270,9 @@
         transform: translate(-50%, -50%);
       }
     }
-    .search-button{
-      text-decoration: none;
-      // background: linear-gradient(90deg,#03a9f4,#f441a5,#ffeb3b,#03a9f4);
-      background: linear-gradient(90deg,#f441a5,#FF7F00,#ffeb3b,#17ff17,#45fffc,#03a9f4,#b661fd,#f441a5);
-      background-size: 400%;
-      text-transform: uppercase;
-      box-sizing: border-box;
-      // border-radius: 50px;
-      // z-index: 1;
-    }
-    // .search-button::before{
-    //   content: "";
-    //   position: absolute;
-    //   left: -5px;
-    //   right: -5px;
-    //   top:-5px;
-    //   bottom: -5px;
-    //   // background: linear-gradient(90deg,#03a9f4,#f441a5,#ffeb3b,#03a9f4);
-    //   background: linear-gradient(90deg,#f441a5,#FF7F00,#ffeb3b,#17ff17,#45fffc,#03a9f4,#b661fd,#f441a5);
-    //   background-size: 400%;
-    //   border-radius: 50px;
-    //   filter: blur(100px);
-    //   z-index: -1;
-    // }
     // .search-button:hover{
-    .search-button{
-      animation: sun 10s linear infinite;
-    }
-    @keyframes sun{
-      100%{
-        background-position: 400% 0;
-      }
-    }
+    //   animation: sun 10s linear infinite;
+    // }
     .recommend-content {
       width: @searchBarWidth;
       top: 110%;

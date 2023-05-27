@@ -14,7 +14,10 @@ const store = createStore({
         {name: "Vuejs", price: 200, count: 3},
         {name: "Node", price: 100, count: 2}
       ],
-      discount: 0.6
+      discount: 0.6,
+
+
+      isConciseMode: true,
     }
   },
   mutations: { // mutations用于改变state中保存的值
@@ -26,6 +29,13 @@ const store = createStore({
     },
     abc(state, payload) {
       console.log(payload.name, payload.age)
+    },
+
+
+
+    changeConciseMode(state) {
+      console.log('changeConciseMode')
+      state.isConciseMode = !state.isConciseMode
     }
   },
   getters: { // getters用于对state中保存的值进行操作

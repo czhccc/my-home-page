@@ -1,12 +1,15 @@
 <template>
-  <div class="Clock">
+  <div class="Clock" :style="{
+                            backgroundColor: storeState.isConciseMode.value ? 'rgba(0, 0, 0, 0.2)' : 'rgba(255, 255, 255, 0.5)',
+                            borderRadius: storeState.isConciseMode.value ? '16px' : ''
+  }">
     <canvas id="canvas" width="220" height="220">
       你的浏览器不支持该元素！赶紧下载最新版本浏览器或使用其他浏览器！
     </canvas>
-    <!-- <div class="text-wrapper">
+    <div v-if="storeState.isConciseMode.value" class="text-wrapper-concise">
       {{thisYearPassedDays}} ~ {{365-thisYearPassedDays}} ~ {{utilAge29Days}}
-    </div> -->
-    <div class="text-wrapper">
+    </div>
+    <div v-if="!storeState.isConciseMode.value" class="text-wrapper-colorful">
       <span class="text text1">{{thisYearPassedDays}}</span>
       ~ 
       <span class="text text2">{{365-thisYearPassedDays}}</span>
@@ -18,11 +21,11 @@
       <div>距离29岁只剩<b>{{utilAge29Days}}</b>天</div>
     </div> -->
 
-    <!-- 周长动画 -->
-    <span class="bg-span-1"></span>
-    <span class="bg-span-2"></span>
-    <span class="bg-span-3"></span>
-    <span class="bg-span-4"></span>
+    <!-- border动画 -->
+    <span class="bg-span-1" v-if="!storeState.isConciseMode.value"></span>
+    <span class="bg-span-2" v-if="!storeState.isConciseMode.value"></span>
+    <span class="bg-span-3" v-if="!storeState.isConciseMode.value"></span>
+    <span class="bg-span-4" v-if="!storeState.isConciseMode.value"></span>
 
     <div class="mask"></div>
 
@@ -37,9 +40,12 @@
 <script setup>
   import { onMounted, ref } from "vue";
   import Hourglass from './components/Hourglass/Hourglass.vue'
+  import { useState } from '../../store/useMapper'
 
   let thisYearPassedDays = ref(0)
   let utilAge29Days = ref(0)
+
+  const storeState = useState(['isConciseMode'])
 
   onMounted(() => {
     drowClock()
@@ -158,43 +164,23 @@
   top: 10px;
   text-align: center;
   padding-bottom: 10px;
-  // border-radius: 20px;
-  // border: 1px solid rgb(177, 176, 176);
   box-shadow: rgba(0, 0, 0, 0.12) 0px 4px 19px 0px;
   overflow: hidden;
-  background-color: rgba(255, 255, 255, 0.5);
-  
-  // .text-wrapper{
-  //   // color: linear-gradient(to right,red,green);
-  //   color: white;
-  //   /* 将元素裁剪为一个圆形（100px表示圆的直径，0% 50%表示圆心的位置） */
-  //   // clip-path: circle(100px at 0% 50%);
-  //   animation: light 5s infinite;
-  // }
+  // background-color: rgba(255, 255, 255, 0.5);
+  // background-color: rgba(0, 0, 0, 0.2);
 
-  /* 定义动画 改变圆心的位置 */
-  // @keyframes light{
-  //   0%{
-  //     clip-path: circle(20px at 0% 50%);
-  //   }
-  //   50%{
-  //     clip-path: circle(20px at 100% 50%);
-  //   }
-  //   100%{
-  //     clip-path: circle(20px at 0% 50%);
-  //   }
-  // }
-
-
-  .text-wrapper {
+  .text-wrapper-concise {
+    color: black;
+    font-weight: bold;
+    font-size: 20px;
+  }
+  .text-wrapper-colorful {
     .text {
-      color: white;
       font-weight: bold;
-      color: #111;
-      /* 模糊滤镜 */
-      filter: blur(2px);
-      /* 执行动画：动画名称 时长 线性的 无限次播放 */
-      animation: animate 2.5s linear infinite;
+      color: black;
+      filter: blur(2px); /* 模糊滤镜 */
+      animation: animate 2.5s linear infinite; /* 执行动画：动画名称 时长 线性的 无限次播放 */
+      font-size: 20px;
     }
     .text1 {
       animation-delay: 0s;
@@ -209,14 +195,10 @@
     @keyframes animate {
       0%,100%{
         color: #fff;
-        /* 模糊滤镜 */
-        filter: blur(2px);
+        filter: blur(2px); /* 模糊滤镜 */
         /* 文字阴影 */
-        text-shadow: 
-          0 0 10px white,
-          0 0 20px white,
-          0 0 30px white;
-        }
+        text-shadow: 0 0 10px white, 0 0 20px white, 0 0 30px white;
+      }
       5%,95%{
         color: #111;
         filter: blur(0px);
@@ -230,7 +212,6 @@
     position: absolute;
     top: 0;
     left: 0;
-    // backdrop-filter: blur(10px);
   }
   .hourglass-wrapper {
     width: @canvasWidth;

@@ -13,11 +13,11 @@
             }">&nbsp;工作模式&nbsp;
             </a>
           </li>
-          <li style="--clr:#ff6493" @click="conciseMode">
+          <li style="--clr:#ff6493" @click="changeConciseMode">
             <a href="#" data-text="&nbsp;简约模式" :style="{
-              '--activeWidth': isConciseMode?'100%':'0%', 
-              '--activeShadow': isConciseMode?'drop-shadow(0 0 25px var(--clr))':'unset',
-              '--activeAndHoverWidth': isConciseMode?'100%':'50%'
+              '--activeWidth': storeState.isConciseMode.value?'100%':'0%', 
+              '--activeShadow': storeState.isConciseMode.value?'drop-shadow(0 0 25px var(--clr))':'unset',
+              '--activeAndHoverWidth': storeState.isConciseMode.value?'100%':'50%'
             }">&nbsp;简约模式&nbsp;</a>
           </li>
           <li style="--clr:#ffdd1c" @click="AAAAMode">
@@ -50,11 +50,14 @@
 
 <script setup>
   import { onMounted, ref } from "vue";
+  import { useStore } from "vuex";
+  import { useState } from '../../store/useMapper'
+
+  let { state, commit } = useStore()
 
   let isShowSidebar = ref(false)
 
   let isWordMode = ref(false)
-  let isConciseMode = ref(false)
   let isAAAAMode = ref(false)
   let isBBBBMode = ref(false)
   let isCCCCMode = ref(false)
@@ -63,11 +66,13 @@
 
   })
 
+  const storeState = useState(['isConciseMode'])
+
   function wordMode() {
     isWordMode.value = !isWordMode.value
   }
-  function conciseMode() {
-    isConciseMode.value = !isConciseMode.value
+  function changeConciseMode() {
+    commit('changeConciseMode')
   }
   function AAAAMode() {
     isAAAAMode.value = !isAAAAMode.value
@@ -93,11 +98,10 @@
   position: fixed;
   right: 0;
   top: 0;
-  width: 100vw;
   height: 100vh;
   display: flex;
   justify-content: flex-end;
-  transition:all 3s;
+  transition:all 1.5s;
   .show {
     width: 100%;
     height: 100%;
@@ -109,6 +113,7 @@
       flex: 1;
       height: 100%;
       background-color: rgba(255, 255, 255, 0.5);
+      z-index: 999;
     }
     .content {
       width: 400px;

@@ -1,4 +1,5 @@
 import { useStore, mapState, mapGetters } from 'vuex'
+import { computed } from 'vue'
 
 function useMapper(mapper, mapFn) {
   // 拿到stote
