@@ -1,6 +1,6 @@
 <template>
   <div class="Clock" :style="{
-                            backgroundColor: storeState.isConciseMode.value ? 'rgba(0, 0, 0, 0.2)' : 'rgba(255, 255, 255, 0.5)',
+                            backgroundColor: storeState.isConciseMode.value ? 'rgba(30, 30, 30, 0.2)' : 'rgba(255, 255, 255, 0.5)',
                             borderRadius: storeState.isConciseMode.value ? '16px' : ''
   }">
     <canvas id="canvas" width="220" height="220">
@@ -164,13 +164,14 @@
   top: 10px;
   text-align: center;
   padding-bottom: 10px;
-  box-shadow: rgba(0, 0, 0, 0.12) 0px 4px 19px 0px;
+  backdrop-filter: blur(18px);
+  box-sizing: border-box;
+  box-shadow: 0 0 30px rgba(0, 0, 0, .05);
+  box-sizing: border-box;
   overflow: hidden;
-  // background-color: rgba(255, 255, 255, 0.5);
-  // background-color: rgba(0, 0, 0, 0.2);
-
+  user-select: none;
+  -webkit-user-drag: none;
   .text-wrapper-concise {
-    color: black;
     font-weight: bold;
     font-size: 20px;
   }

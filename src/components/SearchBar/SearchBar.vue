@@ -280,6 +280,7 @@
       background-color: white;
       border-radius: 30px;
       box-shadow: rgba(0, 0, 0, 0.12) 0px 4px 19px 0px;
+      z-index: 999;
       .recommend-content-item {
         cursor: pointer;
         height: 50px;

@@ -118,7 +118,10 @@
     .content {
       width: 400px;
       height: 100%;
-      background-color: white;
+      backdrop-filter: blur(18px);
+      background-color: rgba(230, 235, 240, .95);
+      box-sizing: border-box;
+      box-shadow: 0 0 30px rgba(0, 0, 0, .05);
       padding: 20px;
       box-sizing: border-box;
       ul {

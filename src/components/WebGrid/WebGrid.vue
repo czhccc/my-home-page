@@ -1,23 +1,43 @@
 <template>
   <div class="WebGrid" @mousewheel="webGridMouseWheel">
-    <div class="items" v-for="(item, index) in webList" :key="index" @click="openWeb(item.webUrl)">
-      <div class="img-wrapper">
-        <img class="icon" :src="item.iconUrl" alt="">
-        <!-- <img class="icon" src="../../assets/images/web-icons/bilibili.png" alt=""> -->
+    <transition
+      mode="out-in" 
+      :duration="animationDuration" 
+      enter-active-class="animate__animated animate__rollIn"
+      leave-active-class="animate__animated animate__rollOut"
+    >
+      <div class="items-wrapper" v-if="isLifeWebList">
+        <div class="items" v-for="(item, index) in webListLife" :key="index" @click="openWeb(item.webUrl)">
+          <div class="img-wrapper">
+            <img class="icon" :src="item.iconUrl" alt="">
+          </div>
+          <div class="name" :style="{color: storeState.isConciseMode.value ? 'black' : 'white'}">{{item.name}}</div>
+        </div>
       </div>
-      <div class="name" :style="{color: storeState.isConciseMode.value ? 'black' : 'white'}">{{item.name}}</div>
-    </div>
+      <div class="items-wrapper" v-else>
+        <div class="items" v-for="(item, index) in webListWork" :key="index" @click="openWeb(item.webUrl)">
+          <div class="img-wrapper">
+            <img class="icon" :src="item.iconUrl" alt="">
+          </div>
+          <div class="name" :style="{color: storeState.isConciseMode.value ? 'black' : 'white'}">{{item.name}}</div>
+        </div>
+      </div>
+    </transition>
   </div>
 </template>
 
 <script setup>
   import { onMounted, ref } from "vue";
-  import { useState } from '../../store/useMapper'
+  import { useState } from '../../store/useMapper';
 
   const storeState = useState(['isConciseMode'])
 
-  let webList = ref([])
-  let wenListFlag = ref('life')
+  let animationDuration = ref(500) // 要改的话记得改CSS的动画持续时间
+  let isInInterval = ref(false)
+
+  let isLifeWebList = ref(true)
+  let preIsLifeWebList = ref(true) // 用于防止偶数次滚轮后最终的列表和上次是一样的
+  let times = ref(0)
 
   let webListLife = ref([
     {name: 'B站', iconUrl: new URL('../../assets/images/web-icons/bilibili.png', import.meta.url).href, weburl: 'https://www.bilibili.com/'},
@@ -31,82 +51,85 @@
     {name: 'CSDN', iconUrl: new URL('../../assets/images/web-icons/csdn.png', import.meta.url).href, weburl: 'https://blog.csdn.net/eartholtainanwan'},
     {name: 'Github', iconUrl: new URL('../../assets/images/web-icons/github.png', import.meta.url).href, webUrl: 'https://github.com/'},
     {name: '微信公众平台', iconUrl: new URL('../../assets/images/web-icons/weixin-gzpt.png', import.meta.url).href, webUrl: 'https://mp.weixin.qq.com/'},
-    {name: '微信开发者文档', iconUrl: new URL('../../assets/images/web-icons/weixin-kfzwd.png', import.meta.url).href, webUrl: 'https://developers.weixin.qq.com/miniprogram/dev/framework/'},
+    {name: '微信小程序开发文档', iconUrl: new URL('../../assets/images/web-icons/weixin-kfzwd.png', import.meta.url).href, webUrl: 'https://developers.weixin.qq.com/miniprogram/dev/framework/'},
     {name: 'Vue', iconUrl: new URL('../../assets/images/web-icons/vue.png', import.meta.url).href, webUrl: 'https://cn.vuejs.org/'},
     {name: 'React', iconUrl: new URL('../../assets/images/web-icons/react.png', import.meta.url).href, webUrl: 'https://react.docschina.org/'},
   ])
-
-  onMounted(() => {
-    webList.value = webListLife.value
-  })
 
   function openWeb(webUrl) {
     window.open(webUrl);
   }
 
   function webGridMouseWheel(e) {
-    if (e.wheelDelta<0) {
-      if (wenListFlag.value === 'work') return;
-      wenListFlag.value = 'work'
-      webList.value = webListWork.value
-    } else if (e.wheelDelta>0) {
-      if (wenListFlag.value === 'life') return;
-      wenListFlag.value = 'life'
-      webList.value = webListLife.value
+    if (isInInterval.value) return;
+    isLifeWebList.value = !isLifeWebList.value
+    if (!isInInterval.value) {
+      isInInterval.value = true
+      setTimeout(() => {
+        isInInterval.value = false
+      }, 500)
     }
   }
 
 </script>
 
 <style scoped lang="less">
+.animate__animated.animate__rollIn {
+  --animate-duration: 0.5s;
+}
+.animate__animated.animate__rollOut {
+  --animate-duration: 0.5s;
+}
 .WebGrid {
   width: 1000px;
   height: 500px;
-  // background-color: pink;
-  display: grid;
-  grid-template-columns: repeat(auto-fill,100px);
-  column-gap: 15px;
-  justify-content: space-between;
-  .items {
-    width: 100px;
-    height: 136px;
-    text-align: center;
-    cursor: pointer;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    .img-wrapper {
-      .icon {
-        width: 100px;
-        height: 100px;
-        border-radius: 50%;
-        box-shadow: rgba(0, 0, 0, 0.12) 0px 3px 15px 0px;
-        transition: all 0.5s;
+  .items-wrapper {
+    width: 100%;
+    height: 100%;
+    display: grid;
+    grid-template-columns: repeat(auto-fill,100px);
+    column-gap: 15px;
+    justify-content: space-between;
+    .items {
+      width: 100px;
+      height: 136px;
+      cursor: pointer;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      transition: all 0.5s;
+      .img-wrapper {
+        .icon {
+          width: 100%;
+          height: 100%;
+          border-radius: 50%;
+          box-shadow: rgba(0, 0, 0, 0.12) 0px 3px 15px 0px;
+          user-select: none;
+          -webkit-user-drag: none;
+        }
+      }
+      .name {
+        text-align: center;
+        display: inline-block;
+        margin-top: 6px;
+        font-weight: 700;
+        border-radius: 8px;
+        padding: 0 4px;
+        font-size: 18px;
+        user-select: none;
+        -webkit-user-drag: none;
       }
     }
-    .name {
-      height: 30px;
-      line-height: 30px;
-      display: inline-block;
-      margin-top: 6px;
-      font-weight: 700;
-      border-radius: 8px;
-      padding: 0 4px;
-      font-size: 18px;
-      transition: all 0.5s;
-    }
-  }
-  .items:hover {
-    .img-wrapper {
-      .icon {
-        width: 120px;
-        height: 120px;
+    .items:hover {
+      transform: scale(1.2);
+      .img-wrapper {
+        .icon {
+          box-shadow: rgba(1,175,253, 0.8) 0px 3px 15px 0px;
+        }
+      }
+      .name {
         box-shadow: rgba(1,175,253, 0.8) 0px 3px 15px 0px;
       }
-    }
-    .name {
-      box-shadow: rgba(1,175,253, 0.8) 0px 3px 15px 0px;
-      font-size: 20px;
     }
   }
 }
