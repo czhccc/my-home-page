@@ -40,7 +40,7 @@
   let times = ref(0)
 
   let webListLife = ref([
-    {name: 'B站', iconUrl: new URL('../../assets/images/web-icons/bilibili.png', import.meta.url).href, weburl: 'https://www.bilibili.com/'},
+    {name: 'B站', iconUrl: new URL('../../assets/images/web-icons/bilibili.png', import.meta.url).href, webUrl: 'https://www.bilibili.com/'},
     {name: '油管', iconUrl: new URL('../../assets/images/web-icons/youtube.png', import.meta.url).href, webUrl: 'https://www.youtube.com'},
     {name: '推特直播', iconUrl: new URL('../../assets/images/web-icons/twitch.png', import.meta.url).href, webUrl: 'https://www.twitch.tv/'},
     {name: '推特', iconUrl: new URL('../../assets/images/web-icons/twitter.png', import.meta.url).href, webUrl: 'https://www.twitter.com'},
@@ -48,7 +48,8 @@
   ])
   
   let webListWork = ref([
-    {name: 'CSDN', iconUrl: new URL('../../assets/images/web-icons/csdn.png', import.meta.url).href, weburl: 'https://blog.csdn.net/eartholtainanwan'},
+    {name: '腾讯企业邮箱', iconUrl: new URL('../../assets/images/web-icons/txqyyx.png', import.meta.url).href, webUrl: 'https://exmail.qq.com/cgi-bin/loginpage'},
+    {name: 'CSDN', iconUrl: new URL('../../assets/images/web-icons/csdn.png', import.meta.url).href, webUrl: 'https://blog.csdn.net/eartholtainanwan'},
     {name: 'Github', iconUrl: new URL('../../assets/images/web-icons/github.png', import.meta.url).href, webUrl: 'https://github.com/'},
     {name: '微信公众平台', iconUrl: new URL('../../assets/images/web-icons/weixin-gzpt.png', import.meta.url).href, webUrl: 'https://mp.weixin.qq.com/'},
     {name: '微信小程序开发文档', iconUrl: new URL('../../assets/images/web-icons/weixin-kfzwd.png', import.meta.url).href, webUrl: 'https://developers.weixin.qq.com/miniprogram/dev/framework/'},

@@ -27,8 +27,6 @@
     <span class="bg-span-3" v-if="!storeState.isConciseMode.value"></span>
     <span class="bg-span-4" v-if="!storeState.isConciseMode.value"></span>
 
-    <div class="mask"></div>
-
     <div class="hourglass-wrapper">
       <Hourglass />
     </div>
@@ -159,9 +157,7 @@
 @canvasHeight: 220px;
 
 .Clock {
-  position: fixed;
-  left: 10px;
-  top: 10px;
+  width: 220px;
   text-align: center;
   padding-bottom: 10px;
   backdrop-filter: blur(18px);
@@ -206,13 +202,6 @@
         text-shadow: none;
       }
     }
-  }
-  .mask {
-    width: 100%;
-    height: 100%;
-    position: absolute;
-    top: 0;
-    left: 0;
   }
   .hourglass-wrapper {
     width: @canvasWidth;

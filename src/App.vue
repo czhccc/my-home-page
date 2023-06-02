@@ -2,7 +2,10 @@
   <!-- <div class="main-wrap"> -->
   <div class="main-wrap" :style="{'background-image': 'url(' + getBackgroundImg() + ')'}">
     <BackAnimation />
-    <Clock />
+    <div class="main-left-container">
+      <Clock class="Clock" />
+      <Countdown class="Countdown" />
+    </div>
     <main class="main-middle-center">
       <SearchBar class="SearchBar" />
       <div class="WebGrid-wrapper-app">
@@ -10,6 +13,9 @@
       </div>
     </main>
     <Sidebar />
+    
+
+    <!-- <div class="temporary">剩余功能：<br/>生日提醒、<br/>眼睛倒计时、<br/>随机警醒句子</div> -->
   </div>
 </template>
 
@@ -19,6 +25,7 @@
   import Clock from './components/Clock/Clock.vue'
   import Sidebar from './components/Sidebar/Sidebar.vue'
   import WebGrid from './components/WebGrid/WebGrid.vue'
+  import Countdown from './components/Countdown/Countdown.vue'
 
   import { ref } from 'vue'
 
@@ -43,12 +50,24 @@
 @import url("normalize.css");
 
 .main-wrap {
-  // background: url('/src/assets/images/back-imgs/niyan.jpg');
-  // background: url('/src/assets/images/back-imgs/space.jpg');
   background-size: 100% 100%;
   background-repeat: no-repeat;
   width: 100vw;
   height: 100vh;
+  .main-left-container {
+    position: fixed;
+    left: 10px;
+    top: 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    .Clock {
+
+    }
+    .Countdown {
+      margin-top: 10px;
+    }
+  }
   .main-middle-center {
     width: 100vw;
     height: 100%;
@@ -67,6 +86,15 @@
         transform: translateY(-50%);
       }
     }
+  }
+
+
+  .temporary {
+    position: absolute;
+    right: 10px;
+    top: 10px;
+    font-size: 30px;
+    color: red;
   }
 }
 </style>

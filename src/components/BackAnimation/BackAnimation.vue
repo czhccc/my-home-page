@@ -30,14 +30,16 @@
       <ConveyerBelt />
     </div> -->
     
-    <!-- <div class="BallStairs-wrapper">
-      <BallStairs />
-    </div> -->
+      <!-- <div class="BallStairs-wrapper">
+        <BallStairs />
+      </div> -->
     
     <!-- <div class="ThreeSquare-wrapper">
       <ThreeSquare />
     </div> -->
 
+    <!-- <iframe id="WaveAndFish" name="WaveAndFish" src="./components/WaveAndFish/index.html" width="100%" height="100%"></iframe> -->
+    <iframe id="WaveAndFish" name="WaveAndFish" src="static/WaveAndFish/index.html"  width="100%" height="100%" frameborder="no"></iframe>
 
   </div>
 </template>
