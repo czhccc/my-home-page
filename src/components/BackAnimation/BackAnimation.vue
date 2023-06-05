@@ -18,9 +18,9 @@
       <HelixLoader />
     </div> -->
     
-    <div v-if="!storeState.isConciseMode.value" class="FireworksTube-wrapper">
+    <!-- <div v-if="!storeState.isConciseMode.value" class="FireworksTube-wrapper">
       <FireworksTube />
-    </div>
+    </div> -->
     
     <!-- <div class="ColorfulCircle-wrapper">
       <ColorfulCircle />
@@ -38,8 +38,10 @@
       <ThreeSquare />
     </div> -->
 
-    <!-- <iframe id="WaveAndFish" name="WaveAndFish" src="./components/WaveAndFish/index.html" width="100%" height="100%"></iframe> -->
-    <iframe id="WaveAndFish" name="WaveAndFish" src="static/WaveAndFish/index.html"  width="100%" height="100%" frameborder="no"></iframe>
+    <div class="WaveAndFish-wrappper">
+      <iframe id="WaveAndFish" name="WaveAndFish" src="./static/WaveAndFish/waveAndFish.html" frameborder="no"></iframe>
+    </div>
+    
 
   </div>
 </template>
@@ -48,7 +50,7 @@
   import Meteor from './components/Meteor/Meteor.vue'
   import Wave from './components/Wave/Wave.vue'
   import HelixLoader from './components/HelixLoader/HelixLoader.vue'
-  import FireworksTube from './components/FireworksTube/FireworksTube.vue'
+  // import FireworksTube from './components/FireworksTube/FireworksTube.vue'
   import ColorfulCircle from './components/ColorfulCircle/ColorfulCircle.vue'
   import ConveyerBelt from './components/ConveyerBelt/ConveyerBelt.vue'
   import BallStairs from './components/BallStairs/BallStairs.vue'
@@ -120,6 +122,17 @@
     position: absolute;
     left: 700px;
     top: 500px;
+  }
+
+  .WaveAndFish-wrappper {
+    width: 100%;
+    height: 30%;
+    position: absolute;
+    bottom: 0;
+    #WaveAndFish {
+      width: 100%;
+      height: 100%;
+    }
   }
 }
 </style>

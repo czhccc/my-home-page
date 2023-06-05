@@ -43,6 +43,11 @@
 </template>
 
 <script setup>
+  // import Popover from 'ant-design-vue/lib/popover'; // 加载 JS
+  // import 'ant-design-vue/lib/popover/style/css'; // 加载 CSS
+
+  import { Popover } from 'ant-design-vue'
+
   import { onBeforeMount, onMounted, ref } from 'vue'
   import { watchEffect } from 'vue'
   import { SyncOutlined, SearchOutlined } from '@ant-design/icons-vue';
@@ -50,13 +55,13 @@
   import { useState } from '../../store/useMapper'
   
   let searchTypeIconList = ref([
-    {type: 'google', url: '/src/assets/images/web-icons/google.png'},
-    {type: 'baidu', url: '/src/assets/images/web-icons/baidu.png'},
-    {type: 'bilibili', url: '/src/assets/images/web-icons/bilibili.png'},
-    {type: 'youtube', url: '/src/assets/images/web-icons/youtube.png'},
-    {type: 'google-translation', url: '/src/assets/images/web-icons/google-translation.png'},
-    {type: 'baidu-translation', url: '/src/assets/images/web-icons/baidu-translation.png'},
-    {type: 'pixiv', url: '/src/assets/images/web-icons/pixiv.png'},
+    {type: 'google', url: require('../../assets/images/web-icons/google.png')},
+    {type: 'baidu', url: require('../../assets/images/web-icons/baidu.png')},
+    {type: 'bilibili', url: require('../../assets/images/web-icons/bilibili.png')},
+    {type: 'youtube', url: require('../../assets/images/web-icons/youtube.png')},
+    {type: 'google-translation', url: require('../../assets/images/web-icons/google-translation.png')},
+    {type: 'baidu-translation', url: require('../../assets/images/web-icons/baidu-translation.png')},
+    {type: 'pixiv', url: require('../../assets/images/web-icons/pixiv.png')},
   ])
   let currentSearchTypeIcon = ref('')
   let currentSearchType = ref('')

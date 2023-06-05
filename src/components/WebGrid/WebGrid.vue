@@ -99,7 +99,11 @@
       flex-direction: column;
       align-items: center;
       transition: all 0.5s;
+      user-select: none;
+      -webkit-user-drag: none;
       .img-wrapper {
+        user-select: none;
+        -webkit-user-drag: none;
         .icon {
           width: 100%;
           height: 100%;
