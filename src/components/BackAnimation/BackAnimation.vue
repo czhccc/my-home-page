@@ -72,6 +72,7 @@
 
   .Wave-wrapper {
     width: 100%;
+    height: 15vh;
     position: absolute;
     bottom: 0;
   }
@@ -119,7 +120,7 @@
 
   .WaveAndFish-wrapper {
     width: 100%;
-    height: 25%;
+    height: 25vh;
     position: absolute;
     bottom: 0;
     .WaveAndFish {

@@ -101,7 +101,7 @@
   height: 100vh;
   display: flex;
   justify-content: flex-end;
-  transition:all 1.5s;
+  transition:all 1s;
   .show {
     width: 100%;
     height: 100%;
@@ -148,7 +148,7 @@
             color: var(--clr);
             overflow: hidden;
             // width: 0;
-            transition: 0.5s;
+            transition: 0.3s;
             border-right: 8px solid var(--clr);
             -webkit-text-stroke: 1px var(--clr);
             White-space: nowrap;

@@ -50,7 +50,7 @@
   /* 波浪 开始 */
   .waves {
     width: 100%;
-    height: 15vh;
+    height: 100%;
     margin-bottom: -7px; /*Fix for safari gap*/
     min-height: 100px;
     max-height: 150px;

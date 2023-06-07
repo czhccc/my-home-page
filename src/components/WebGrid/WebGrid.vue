@@ -87,7 +87,7 @@
 @rowGap: 40px; // 行间距
 @columnGap: 40px; // 列间距
 .WebGrid {
-  width: @gridTotalWidth;
+  width: 100%;
   padding-bottom: 100px;
   .items-wrapper {
     width: 100%;

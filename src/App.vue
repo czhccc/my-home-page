@@ -1,22 +1,21 @@
 <template>
-  <!-- <div class="main-wrap"> -->
-  <div class="main-wrap" :style="{'background-image': 'url(' + getBackgroundImg() + ')'}">
-    <BackAnimation />
-    <div class="main-left-container">
-      <Clock class="Clock" />
-      <Countdown class="Countdown" />
-    </div>
-    <main class="main-middle-center">
-      <SearchBar class="SearchBar-app" />
-      <div class="WebGrid-wrapper-app">
-        <WebGrid class="WebGrid" />
+  <!-- <v-scale-screen width="1920" height="902"> -->
+    <div class="main-wrap" :style="{'background-image': 'url(' + getBackgroundImg() + ')'}">
+      <BackAnimation />
+      <div class="main-left-container">
+        <Clock class="Clock" />
+        <Countdown class="Countdown" />
       </div>
-    </main>
-    <Sidebar />
-    
-
-    <!-- <div class="temporary">剩余功能：<br/>生日提醒、<br/>眼睛倒计时、<br/>随机警醒句子</div> -->
-  </div>
+      <main class="main-middle-center">
+        <SearchBar class="SearchBar-app" />
+        <div class="WebGrid-wrapper-app">
+          <WebGrid class="WebGrid" />
+        </div>
+      </main>
+      <Sidebar />
+      <!-- <div class="temporary">剩余功能：<br/>生日提醒、<br/>眼睛倒计时、<br/>随机警醒句子</div> -->
+    </div>
+  <!-- </v-scale-screen> -->
 </template>
 
 <script setup>
@@ -26,6 +25,8 @@
   import Sidebar from './components/Sidebar/Sidebar.vue'
   import WebGrid from './components/WebGrid/WebGrid.vue'
   import Countdown from './components/Countdown/Countdown.vue'
+
+  import VScaleScreen from 'v-scale-screen'
 
   import { ref } from 'vue'
 
@@ -50,8 +51,10 @@
 @import url("normalize.css");
 
 .main-wrap {
-  background-size: 100% 100%;
+  // background-size: 100% 100%;
   background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
   width: 100vw;
   height: 100vh;
   .main-left-container {
@@ -76,10 +79,12 @@
     flex-direction: column;
     position: fixed;
     .SearchBar-app {
-      width: 60%;
-      margin-top: 50px;
+      width: 45%;
+      margin-top: 10vh;
     }
     .WebGrid-wrapper-app {
+      width: 55vw;
+      // background-color: pink;
       margin-top: 50px;
       .WebGrid {
         

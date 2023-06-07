@@ -1,37 +1,50 @@
 <template>
   <div class="SearchBar">
     <div class="SearchBar-container">
-      <a-popover placement="bottom"
-                :getPopupContainer="triggerNode => { return triggerNode.parentNode }"
-      >
-        <template #content>
-          <div class="left" v-for="(item, index) in searchTypeIconList" :key="index">
-            <img class="search-type-img" :src="item.url" @click="changeSearchType(item)" alt="">
+      <div class="left" @mouseenter="isShowLeftPopover = true">
+        <img class="search-type-img" :src="currentSearchTypeIcon" alt="">
+        <transition
+          mode="out-in"
+          enter-active-class="animate__animated animate__flip"
+          leave-active-class="animate__animated animate__hinge"
+        >
+          <div class="popover" v-if="isShowLeftPopover">
+            <div class="popover-body">
+              <div class="popover-item" @click="isShowLeftPopover = false"
+                   v-for="(item, index) in searchTypeIconList" :key="index"
+              >
+                <img class="search-type-img" :src="item.url" alt=""
+                    @click="changeSearchType(item)"
+                    :class="{'popover-active':currentSearchType === item.type}"
+                >
+              </div>
+            </div>
           </div>
-        </template>
-        <div class="left">
-          <img class="search-type-img" :src="currentSearchTypeIcon" alt="">
-        </div>
-      </a-popover>
+        </transition>
+      </div>
       <div class="search-input-wrapper">
         <input v-model="searchParam" 
                 @blur="searchInputBlur" 
                 @focus="searchInputFocus"
-                @keydown="searchInputKeydown" 
+                @keydown="searchInputKeydown"
+                @mouseenter="isShowLeftPopover = false"
                 type="text" 
                 ref="searchInput" 
                 id="searchInput" class="search-input" 
                 placeholder="输入并搜索"
         >
-        <sync-outlined spin @click="clear" class="clear-icon" v-show="searchParam" />
+        <img class="clear-icon" 
+             src="../../assets/images/seachBar-icons/input-clear.png" alt=""
+             @click="clear" v-show="searchParam"
+        >
       </div>
       <button class="search-button search-button-concise" v-if="storeState.isConciseMode.value" @click="e => toSearch()">
         <div class="search-button-mask"></div>
-        <search-outlined class="search-icon" />
+        <img class="search-icon" src="../../assets/images/seachBar-icons/search-icon.png" alt="">
       </button>
       <button class="search-button search-button-colorful" v-if="!storeState.isConciseMode.value" @click="e => toSearch()">
         <div class="search-button-mask"></div>
-        <search-outlined class="search-icon" />
+        <img class="search-icon" src="../../assets/images/seachBar-icons/search-icon.png" alt="">
       </button>
       <div class="recommend-content" id="recommend-content" v-if="searchParam" @mouseenter="recommendMoseenter" @mouseleave="recommendMoseleave">
         <div class="recommend-content-item" v-for="(item, index) in recommendList" :key="index" @click="recommendItemClick(item)">
@@ -43,13 +56,8 @@
 </template>
 
 <script setup>
-  // import { Popover } from 'ant-design-vue';
-  // import Popover from 'ant-design-vue/lib/popover'; // 加载 JS
-  // import 'ant-design-vue/lib/popover/style/css'; // 加载 CSS
-
   import { onBeforeMount, onMounted, ref } from 'vue'
   import { watchEffect } from 'vue'
-  import { SyncOutlined, SearchOutlined } from '@ant-design/icons-vue';
 
   import { useState } from '../../store/useMapper'
   
@@ -63,12 +71,15 @@
     {type: 'pixiv', url: require('../../assets/images/web-icons/pixiv.png')},
   ])
   let currentSearchTypeIcon = ref('')
-  let currentSearchType = ref('')
+  let currentSearchType = ref('google')
   let searchParam = ref('')
 
   let recommendList = ref([])
   let lastRecommendList = ref([])
   let isInRecommend = ref(false)
+
+  let isShowLeftPopover = ref(false)
+  let duringAnimateAndPreventDisappear = ref(false) // leftPopover添加了旋转出现的动画，旋转而变成一条线时鼠标移动会触发mouse
 
   const storeState = useState(['isConciseMode'])
 
@@ -169,7 +180,10 @@
 </script>
 
 <style scoped lang="less">
-@searchBarWidth: 700px;
+.animate__animated.animate__flip {
+  --animate-duration: 0.8s;
+}
+
 @searchBarHeight: 80px;
 @searchBarLeftWidth: 80px;
 @searchBarRightWidth: 80px;
@@ -181,7 +195,7 @@
   align-items: center;
   position: relative;
   .SearchBar-container {
-    width: @searchBarWidth;
+    width: 100%;
     height: @searchBarHeight;
     display: flex;
     align-items: center;
@@ -197,11 +211,36 @@
       display: flex;
       align-items: center;
       justify-content: center;
+      position: relative;
       cursor: pointer;
       .search-type-img {
         width: calc(@searchBarHeight / 3 * 2);
         height: calc(@searchBarHeight / 3 * 2);
         border-radius: 50%;
+      }
+      .popover {
+        width: @searchBarLeftWidth;
+        padding: 15px;
+        background-color: white;
+        position: absolute;
+        top: -15px; // 和padding-top有关
+        z-index: 999;
+        border-radius: 16px;
+        box-shadow: rgba(0, 0, 0, 0.12) 0px 4px 19px 0px;
+        .popover-body {
+          .popover-item {
+            box-sizing: border-box;
+            padding: 10px;
+            img {
+              width: 60px;
+              height: 60px;
+            }
+          }
+          .popover-active {
+            transform: scale(1.3);
+            box-shadow: rgba(1,175,253, 1) 0px 3px 15px 0px;
+          }
+        }
       }
     }
     .search-input-wrapper {
@@ -223,11 +262,12 @@
         color: rgb(51, 51, 51);
       }
       .clear-icon {
+        width: calc(@searchBarHeight / 1.5);
+        height: calc(@searchBarHeight / 1.5);
         position: absolute;
         top: 50%;
         transform: translateY(-50%);
         right: 20px;
-        font-size: 24px;
         cursor: pointer;
       }
     }
@@ -253,7 +293,6 @@
       padding: 0;
       position: relative;
       cursor: pointer;
-
       .search-button-mask {
         // position: absolute;
         min-width: @searchBarRightWidth;
@@ -266,6 +305,8 @@
         color: white;
         font-size: calc(@searchBarHeight / 2);
         position: absolute;
+        width: 60%;
+        height: 60%;
         left: 50%;
         top: 50%;
         transform: translate(-50%, -50%);
@@ -275,7 +316,7 @@
     //   animation: sun 10s linear infinite;
     // }
     .recommend-content {
-      width: @searchBarWidth;
+      width: 100%;
       top: 110%;
       position: absolute;
       background-color: white;
