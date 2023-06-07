@@ -7,7 +7,7 @@
       <Countdown class="Countdown" />
     </div>
     <main class="main-middle-center">
-      <SearchBar class="SearchBar" />
+      <SearchBar class="SearchBar-app" />
       <div class="WebGrid-wrapper-app">
         <WebGrid class="WebGrid" />
       </div>
@@ -74,20 +74,18 @@
     display: flex;
     align-items: center;
     flex-direction: column;
-    overflow: hidden;
-    .SearchBar {
+    position: fixed;
+    .SearchBar-app {
+      width: 60%;
       margin-top: 50px;
     }
     .WebGrid-wrapper-app {
-      flex: 1;
+      margin-top: 50px;
       .WebGrid {
-        position: relative;
-        top: 50%;
-        transform: translateY(-50%);
+        
       }
     }
   }
-
 
   .temporary {
     position: absolute;

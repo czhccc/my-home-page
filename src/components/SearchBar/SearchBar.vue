@@ -1,6 +1,6 @@
 <template>
-  <div class="search-wrap">
-    <div class="SearchBar">
+  <div class="SearchBar">
+    <div class="SearchBar-container">
       <a-popover placement="bottom"
                 :getPopupContainer="triggerNode => { return triggerNode.parentNode }"
       >
@@ -13,7 +13,7 @@
           <img class="search-type-img" :src="currentSearchTypeIcon" alt="">
         </div>
       </a-popover>
-      <div class="search">
+      <div class="search-input-wrapper">
         <input v-model="searchParam" 
                 @blur="searchInputBlur" 
                 @focus="searchInputFocus"
@@ -43,10 +43,9 @@
 </template>
 
 <script setup>
+  // import { Popover } from 'ant-design-vue';
   // import Popover from 'ant-design-vue/lib/popover'; // 加载 JS
   // import 'ant-design-vue/lib/popover/style/css'; // 加载 CSS
-
-  import { Popover } from 'ant-design-vue'
 
   import { onBeforeMount, onMounted, ref } from 'vue'
   import { watchEffect } from 'vue'
@@ -170,21 +169,18 @@
 </script>
 
 <style scoped lang="less">
-@searchBarWidth: 800px;
+@searchBarWidth: 700px;
 @searchBarHeight: 80px;
 @searchBarLeftWidth: 80px;
 @searchBarRightWidth: 80px;
-@recommendContentHeight: 110;
+@recommendItemHeight: 50px;
 
-.search-wrap {
+.SearchBar {
   display: flex;
   flex-direction: column;
   align-items: center;
   position: relative;
-  .isVpn {
-    margin-bottom: 10px;
-  }
-  .SearchBar {
+  .SearchBar-container {
     width: @searchBarWidth;
     height: @searchBarHeight;
     display: flex;
@@ -208,7 +204,7 @@
         border-radius: 50%;
       }
     }
-    .search {
+    .search-input-wrapper {
       width: calc(100% - @searchBarLeftWidth - @searchBarRightWidth);
       background-color: white;
       height: @searchBarHeight;
@@ -288,10 +284,10 @@
       z-index: 999;
       .recommend-content-item {
         cursor: pointer;
-        height: 50px;
-        line-height: 50px;
+        height: @recommendItemHeight;
+        line-height: @recommendItemHeight;
         padding-left: calc(@searchBarLeftWidth + 20px);
-        font-size: 20px;
+        font-size: calc(@recommendItemHeight / 2.5);
       }
       .recommend-content-item:hover {
         background-color: rgb(230,230,230);

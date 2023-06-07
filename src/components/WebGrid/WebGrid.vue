@@ -81,29 +81,29 @@
 .animate__animated.animate__rollOut {
   --animate-duration: 0.5s;
 }
+
+@gridTotalWidth: 800px; // 容器的总宽度
+@itemWidth: 100px; // 每一项的宽度
+@rowGap: 40px; // 行间距
+@columnGap: 40px; // 列间距
 .WebGrid {
-  width: 1000px;
-  height: 500px;
+  width: @gridTotalWidth;
+  padding-bottom: 100px;
   .items-wrapper {
     width: 100%;
-    height: 100%;
     display: grid;
-    grid-template-columns: repeat(auto-fill,100px);
-    column-gap: 15px;
+    grid-template-columns: repeat(auto-fill, @itemWidth);
+    grid-row-gap: @rowGap; // 行间距
+    grid-column-gap: @columnGap; // 列间距
     justify-content: space-between;
     .items {
-      width: 100px;
-      height: 136px;
+      width: @itemWidth;
       cursor: pointer;
       display: flex;
       flex-direction: column;
       align-items: center;
       transition: all 0.5s;
-      user-select: none;
-      -webkit-user-drag: none;
       .img-wrapper {
-        user-select: none;
-        -webkit-user-drag: none;
         .icon {
           width: 100%;
           height: 100%;
