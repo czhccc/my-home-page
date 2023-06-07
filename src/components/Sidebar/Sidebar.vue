@@ -170,10 +170,11 @@
   }
   .hiddenArea {
     width: 10px;
-    height: 100%;
+    height: 50vh;
     position: fixed;
     right: 0;
-    top: 0;
+    top: 50%;
+    transform: translateY(-50%);
   }
 }
 </style>

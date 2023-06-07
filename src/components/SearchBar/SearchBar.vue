@@ -341,8 +341,5 @@
       }
     }
   }
-  :deep(.ant-popover-inner-content) {
-    padding: 0;
-  }
 }
 </style>
