@@ -1,46 +1,38 @@
 <template>
-  <div class="Sidebar" :style="{width: isShowSidebar?'100vw':'10px'}"
+  <div class="Sidebar" :style="{width: isShowSidebar?'100vw':'6vw'}"
   >
     <div class="show" v-if="isShowSidebar">
       <div class="mask" @mouseenter="maskMouseEnter"></div>
       <div class="content">
         <ul>
-          <li style="--clr:#00ade1" @click="wordMode">
-            <a href="#" data-text="&nbsp;工作模式" :style="{
-              '--activeWidth': isWordMode?'100%':'0%', 
-              '--activeShadow': isWordMode?'drop-shadow(0 0 25px var(--clr))':'unset',
-              '--activeAndHoverWidth': isWordMode?'100%':'50%'
-            }">&nbsp;工作模式&nbsp;
-            </a>
-          </li>
           <li style="--clr:#ff6493" @click="changeConciseMode">
             <a href="#" data-text="&nbsp;简约模式" :style="{
               '--activeWidth': storeState.isConciseMode.value?'100%':'0%', 
-              '--activeShadow': storeState.isConciseMode.value?'drop-shadow(0 0 25px var(--clr))':'unset',
+              '--activeShadow': storeState.isConciseMode.value?'drop-shadow(0 0 1rem var(--clr))':'unset',
               '--activeAndHoverWidth': storeState.isConciseMode.value?'100%':'50%'
             }">&nbsp;简约模式&nbsp;</a>
           </li>
-          <li style="--clr:#ffdd1c" @click="AAAAMode">
-            <a href="#" data-text="&nbsp;AAAA" :style="{
-              '--activeWidth': isAAAAMode?'100%':'0%', 
-              '--activeShadow': isAAAAMode?'drop-shadow(0 0 25px var(--clr))':'unset',
-              '--activeAndHoverWidth': isAAAAMode?'100%':'50%'
-            }">&nbsp;AAAA&nbsp;</a>
+          <li style="--clr:#ffdd1c" @click="showWave">
+            <a href="#" data-text="&nbsp;波浪特效" :style="{
+              '--activeWidth': storeState.isShowWave.value?'100%':'0%', 
+              '--activeShadow': storeState.isShowWave.value?'drop-shadow(0 0 1rem var(--clr))':'unset',
+              '--activeAndHoverWidth': storeState.isShowWave.value?'100%':'50%'
+            }">&nbsp;波浪特效&nbsp;</a>
           </li>
-          <li style="--clr:#00dc82" @click="BBBBMode">
-            <a href="#" data-text="&nbsp;BBBB" :style="{
-              '--activeWidth': isBBBBMode?'100%':'0%', 
-              '--activeShadow': isBBBBMode?'drop-shadow(0 0 25px var(--clr))':'unset',
-              '--activeAndHoverWidth': isBBBBMode?'100%':'50%'
-            }">&nbsp;BBBB&nbsp;</a>
+          <li style="--clr:#00dc82" @click="showWaveAndFish">
+            <a href="#" data-text="&nbsp;养鱼特效" :style="{
+              '--activeWidth': storeState.isShowWaveAndFish.value?'100%':'0%', 
+              '--activeShadow': storeState.isShowWaveAndFish.value?'drop-shadow(0 0 1rem var(--clr))':'unset',
+              '--activeAndHoverWidth': storeState.isShowWaveAndFish.value?'100%':'50%'
+            }">&nbsp;养鱼特效&nbsp;</a>
           </li>
-          <li style="--clr:#dc00d4" @click="CCCCMode">
+          <!-- <li style="--clr:#dc00d4" @click="CCCCMode">
             <a href="#" data-text="&nbsp;CCCC" :style="{
               '--activeWidth': isCCCCMode?'100%':'0%', 
-              '--activeShadow': isCCCCMode?'drop-shadow(0 0 25px var(--clr))':'unset',
+              '--activeShadow': isCCCCMode?'drop-shadow(0 0 1rem var(--clr))':'unset',
               '--activeAndHoverWidth': isCCCCMode?'100%':'50%'
             }">&nbsp;CCCC&nbsp;</a>
-          </li>
+          </li> -->
         </ul>
       </div>
     </div>
@@ -49,7 +41,7 @@
 </template>
 
 <script setup>
-  import { onMounted, ref } from "vue";
+  import { ref } from "vue";
   import { useStore } from "vuex";
   import { useState } from '../../store/useMapper'
 
@@ -57,28 +49,16 @@
 
   let isShowSidebar = ref(false)
 
-  let isWordMode = ref(false)
-  let isAAAAMode = ref(false)
-  let isBBBBMode = ref(false)
-  let isCCCCMode = ref(false)
+  const storeState = useState(['isConciseMode', 'isShowWave', 'isShowWaveAndFish'])
 
-  onMounted(() => {
-
-  })
-
-  const storeState = useState(['isConciseMode'])
-
-  function wordMode() {
-    isWordMode.value = !isWordMode.value
-  }
   function changeConciseMode() {
     commit('changeConciseMode')
   }
-  function AAAAMode() {
-    isAAAAMode.value = !isAAAAMode.value
+  function showWave() {
+    commit('showWave')
   }
-  function BBBBMode() {
-    isBBBBMode.value = !isBBBBMode.value
+  function showWaveAndFish() {
+    commit('showWaveAndFish')
   }
   function CCCCMode() {
     isCCCCMode.value = !isCCCCMode.value
@@ -93,7 +73,6 @@
 </script>
 
 <style scoped lang="less">
-@itemHeight: 40px;
 .Sidebar {
   position: fixed;
   right: 0;
@@ -112,17 +91,17 @@
     .content {
       width: 25vw;
       height: 100%;
-      backdrop-filter: blur(18px);
+      backdrop-filter: blur(0.5rem);
       background-color: rgba(230, 235, 240, .95);
       box-sizing: border-box;
-      box-shadow: 0 0 30px rgba(0, 0, 0, .05);
+      box-shadow: 0 0 0.6rem rgba(0, 0, 0, .05);
       padding: 2vw;
       box-sizing: border-box;
       ul {
         position: relative;
         display: flex;
         flex-direction: column;
-        gap: 10px;
+        gap: 0.2rem;
         padding-left: 0;
         li {
           list-style: none;
@@ -130,27 +109,27 @@
           a {
             position: relative;
             font-size: 3rem;
-            line-height: 3rem;
+            line-height: 3.2rem;
             text-decoration: none;
-            letter-spacing: 2px;
+            letter-spacing: 0.2rem;
             color: transparent;
-            -webkit-text-stroke: 1px rgba(0, 0, 0, 0.5);
+            -webkit-text-stroke: 0.05rem rgba(0, 0, 0, 0.5);
           }
           a::before {
+            line-height: 3.2rem;
             content: attr(data-text);
             position: absolute;
             color: var(--clr);
             overflow: hidden;
-            // width: 0;
             transition: 0.3s;
-            border-right: 8px solid var(--clr);
-            -webkit-text-stroke: 1px var(--clr);
+            border-right: 0.4rem solid var(--clr);
+            -webkit-text-stroke: 0.02rem var(--clr);
             White-space: nowrap;
           }
           a:hover::before {
             // width: 50%;
             width: var(--activeAndHoverWidth);
-            filter: drop-shadow(0 0 25px var(--clr));
+            filter: drop-shadow(0 0 0.5rem var(--clr));
             // -webkit-text-stroke: 1px var(--clr);
           }
           a::before {
@@ -169,7 +148,7 @@
     }
   }
   .hiddenArea {
-    width: 10px;
+    width: 2vw;
     height: 50vh;
     position: fixed;
     right: 0;

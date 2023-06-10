@@ -18,25 +18,24 @@ const store = createStore({
 
 
       isConciseMode: true,
+      isShowWave: false,
+      isShowWaveAndFish: false,
     }
   },
   mutations: { // mutations用于改变state中保存的值
-    increment(state) {
-      state.counter++
-    },
     [INCREMENT_N](state, n) {
       state.counter + n
     },
-    abc(state, payload) {
-      console.log(payload.name, payload.age)
-    },
-
-
 
     changeConciseMode(state) {
-      console.log('changeConciseMode')
       state.isConciseMode = !state.isConciseMode
-    }
+    },
+    showWave(state) {
+      state.isShowWave = !state.isShowWave
+    },
+    showWaveAndFish(state) {
+      state.isShowWaveAndFish = !state.isShowWaveAndFish
+    },
   },
   getters: { // getters用于对state中保存的值进行操作
     currentDiscount(state) {

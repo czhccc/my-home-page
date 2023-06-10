@@ -115,6 +115,42 @@
           user-select: none;
           -webkit-user-drag: none;
         }
+        .icon:hover {
+          // background: linear-gradient(gold, transparent 100%);
+          animation: roll 1.5s linear infinite;
+        }
+        .icon::before {
+          content: '';
+          width: 100%;
+          height: 100%;
+          background-color: white;
+          position: absolute;
+          left: 50%;
+          top: 50%;
+          transform: translate(-50%, -50%);
+          border-radius: 50%;
+        }
+        .icon::after {
+          content: '';
+          position: absolute;
+          width: 100%;
+          height: 100%;
+          // background: linear-gradient(gold, transparent 100%);
+          background: linear-gradient(90deg,#f441a5,#FF7F00,#ffeb3b,#17ff17,#45fffc,#03a9f4,#b661fd,#f441a5);
+          border-radius: 50%;
+          /* 模糊滤镜 */
+          filter: blur(0.6rem);
+          z-index: -1;
+        }
+        /* 定义动画 */
+        @keyframes roll {
+          to {
+            transform: rotateZ(360deg);
+            /* 转动时再加个颜色变化 */
+            /* 颜色滤镜 通过设置度数可改变颜色 */
+            filter: hue-rotate(360deg);
+          }
+        }
       }
       .name {
         text-align: center;
@@ -131,11 +167,11 @@
       transform: scale(1.3);
       .img-wrapper {
         .icon {
-          box-shadow: rgba(1,175,253, 0.8) 0em 1em 3em 0em;
+          // box-shadow: rgba(1,175,253, 0.8) 0em 1em 3em 0em;
         }
       }
       .name {
-        box-shadow: rgba(1,175,253, 0.8) 0em 1em 3em 0em;
+        // box-shadow: rgba(1,175,253, 0.8) 0em 1em 3em 0em;
       }
     }
   }

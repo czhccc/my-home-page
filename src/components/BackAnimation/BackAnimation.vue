@@ -6,11 +6,6 @@
       <Meteor />
     </div>
 
-    <!-- 波浪 -->
-    <!-- <div class="Wave-wrapper">
-      <Wave />
-    </div> -->
-
     <!-- 彩带 -->
     <!-- <div class="HelixLoader-wrapper">
       <HelixLoader />
@@ -28,9 +23,15 @@
       <ThreeSquare />
     </div> -->
     
-    <!-- <div class="WaveAndFish-wrapper">
+    <!-- 波浪 -->
+    <div class="Wave-wrapper" v-if="storeState.isShowWave.value">
+      <Wave />
+    </div>
+
+    <!-- 养鱼 -->
+    <div class="WaveAndFish-wrapper" v-if="storeState.isShowWaveAndFish.value">
       <WaveAndFish />
-    </div> -->
+    </div>
     
   </div>
 </template>
@@ -47,7 +48,7 @@
   import { computed } from 'vue'
   import { useState } from '../../store/useMapper'
 
-  const storeState = useState(['isConciseMode'])
+  const storeState = useState(['isConciseMode', 'isShowWave', 'isShowWaveAndFish'])
 
 
 </script>
@@ -63,13 +64,6 @@
   .back-video {
     min-width: 100vw;
     min-height: 100vh;
-  }
-
-  .Wave-wrapper {
-    width: 100%;
-    height: 15vh;
-    position: absolute;
-    bottom: 0;
   }
 
   .HelixLoader-wrapper {
@@ -91,7 +85,7 @@
 
   .ColorfulCircle-wrapper {
     position: absolute;
-    left: 10px;
+    left: 20%;
     top: 300px;
   }
   
@@ -105,6 +99,13 @@
     position: absolute;
     left: 700px;
     top: 500px;
+  }
+
+  .Wave-wrapper {
+    width: 100%;
+    height: 30vh;
+    position: absolute;
+    bottom: 7%;
   }
 
   .WaveAndFish-wrapper {
