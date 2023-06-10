@@ -101,7 +101,7 @@
   height: 100vh;
   display: flex;
   justify-content: flex-end;
-  transition:all 1s;
+  transition: all 1s;
   .show {
     width: 100%;
     height: 100%;
@@ -109,20 +109,14 @@
     justify-content: flex-end;
     align-items: center;
     z-index: 999;
-    .mask {
-      flex: 1;
-      height: 100%;
-      background-color: rgba(255, 255, 255, 0.5);
-      z-index: 999;
-    }
     .content {
-      width: 400px;
+      width: 25vw;
       height: 100%;
       backdrop-filter: blur(18px);
       background-color: rgba(230, 235, 240, .95);
       box-sizing: border-box;
       box-shadow: 0 0 30px rgba(0, 0, 0, .05);
-      padding: 20px;
+      padding: 2vw;
       box-sizing: border-box;
       ul {
         position: relative;
@@ -135,8 +129,8 @@
           position: relative;
           a {
             position: relative;
-            font-size: @itemHeight;
-            line-height: @itemHeight;
+            font-size: 3rem;
+            line-height: 3rem;
             text-decoration: none;
             letter-spacing: 2px;
             color: transparent;
@@ -166,6 +160,12 @@
           }
         }
       }
+    }
+    .mask {
+      flex: 1;
+      height: 100%;
+      background-color: rgba(255, 255, 255, 0.5);
+      z-index: 999;
     }
   }
   .hiddenArea {

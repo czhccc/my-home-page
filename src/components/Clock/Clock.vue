@@ -1,7 +1,9 @@
 <template>
-  <div class="Clock" :style="{
-                            backgroundColor: storeState.isConciseMode.value ? 'rgba(30, 30, 30, 0.2)' : 'rgba(255, 255, 255, 0.5)',
-                            borderRadius: storeState.isConciseMode.value ? '16px' : ''
+  <div class="Clock"
+       ref="Clock"
+       :style="{
+          backgroundColor: storeState.isConciseMode.value ? 'rgba(30, 30, 30, 0.2)' : 'rgba(255, 255, 255, 0.5)',
+          borderRadius: storeState.isConciseMode.value ? '16px' : ''
   }">
     <canvas id="canvas" width="220" height="220">
       你的浏览器不支持该元素！赶紧下载最新版本浏览器或使用其他浏览器！
@@ -27,11 +29,11 @@
     <span class="bg-span-3" v-if="!storeState.isConciseMode.value"></span>
     <span class="bg-span-4" v-if="!storeState.isConciseMode.value"></span>
 
-    <div class="hourglass-wrapper">
+    <!-- 沙漏 -->
+    <div class="hourglass-wrapper" :style="{height: ClockWidth+'px'}">
       <Hourglass />
     </div>
     
-
   </div>
 </template>
 
@@ -42,6 +44,8 @@
 
   let thisYearPassedDays = ref(0)
   let utilAge29Days = ref(0)
+  let Clock = ref(null)
+  let ClockWidth = ref(0)
 
   const storeState = useState(['isConciseMode'])
 
@@ -56,12 +60,15 @@
     let passedTimePercentage = passedTime / 365 // 已经过了多少天的百分比
     
     //获取到canvas元素
-    var canvas = document.getElementById('canvas');
+    let canvas = document.getElementById('canvas');
+    ClockWidth = Clock.value.offsetWidth
+    canvas.width = Clock.value.offsetWidth
+    canvas.height = Clock.value.offsetWidth
     //获取canvas中的画图环境
-    var context = canvas.getContext('2d'); 
+    let context = canvas.getContext('2d'); 
 
     //钟表的大小：初始值设置
-    var clockDimensions = 100;
+    let clockDimensions = Clock.value.offsetWidth / 2.2;
 
     //清理当前画布，以便后期绘制
     context.clearRect(0,0,canvas.width,canvas.height);
@@ -120,7 +127,7 @@
     context.moveTo(0, 0);
     // 绘制圆弧
     let endLocation = 2*passedTimePercentage + 1.5
-    context.arc(0, 0, 65, 1.5*Math.PI, endLocation*Math.PI, false);
+    context.arc(0, 0, Clock.value.offsetWidth/3.3, 1.5*Math.PI, endLocation*Math.PI, false);
     // context.arc(canvas.width/2, canvas.height/2, 65, 1.5*Math.PI, 3.4*Math.PI, false);
     // 闭合路径
     context.closePath();
@@ -157,7 +164,7 @@
 @canvasHeight: 220px;
 
 .Clock {
-  width: 220px;
+  width: 100%;
   text-align: center;
   padding-bottom: 10px;
   backdrop-filter: blur(18px);
@@ -169,7 +176,7 @@
   -webkit-user-drag: none;
   .text-wrapper-concise {
     font-weight: bold;
-    font-size: 20px;
+    font-size: 1.4rem;
   }
   .text-wrapper-colorful {
     .text {
@@ -177,7 +184,7 @@
       color: black;
       filter: blur(2px); /* 模糊滤镜 */
       animation: animate 2.5s linear infinite; /* 执行动画：动画名称 时长 线性的 无限次播放 */
-      font-size: 20px;
+      font-size: 1.4rem;
     }
     .text1 {
       animation-delay: 0s;
@@ -204,8 +211,8 @@
     }
   }
   .hourglass-wrapper {
-    width: @canvasWidth;
-    height: @canvasHeight;
+    width: 100%;
+    height: 100%;
     display: flex;
     align-items: center;
     justify-content: center;

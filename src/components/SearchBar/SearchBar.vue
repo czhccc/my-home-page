@@ -39,11 +39,9 @@
         >
       </div>
       <button class="search-button search-button-concise" v-if="storeState.isConciseMode.value" @click="e => toSearch()">
-        <div class="search-button-mask"></div>
         <img class="search-icon" src="../../assets/images/seachBar-icons/search-icon.png" alt="">
       </button>
       <button class="search-button search-button-colorful" v-if="!storeState.isConciseMode.value" @click="e => toSearch()">
-        <div class="search-button-mask"></div>
         <img class="search-icon" src="../../assets/images/seachBar-icons/search-icon.png" alt="">
       </button>
       <div class="recommend-content" id="recommend-content" v-if="searchParam" @mouseenter="recommendMoseenter" @mouseleave="recommendMoseleave">
@@ -184,29 +182,25 @@
   --animate-duration: 0.8s;
 }
 
-@searchBarHeight: 80px;
-@searchBarLeftWidth: 80px;
-@searchBarRightWidth: 80px;
-@recommendItemHeight: 50px;
-
 .SearchBar {
   display: flex;
   flex-direction: column;
   align-items: center;
   position: relative;
+  width: 100%;
+  height: 100%;
   .SearchBar-container {
     width: 100%;
-    height: @searchBarHeight;
+    height: 100%;
     display: flex;
     align-items: center;
     position: relative;
-    border-radius: calc(@searchBarHeight / 2);
-    box-shadow: rgba(0, 0, 0, 0.12) 0px 4px 19px 0px;
+    border-radius: calc(100% / 2);
+    box-shadow: rgba(0, 0, 0, 0.2) 0rem 1rem 4rem 0rem;
     .left {
-      min-width: @searchBarLeftWidth;
-      max-width: @searchBarLeftWidth;
+      width: 10%;
+      height: 100%;
       background-color: white;
-      height: @searchBarHeight;
       border-radius: 50% 0 0 50%;
       display: flex;
       align-items: center;
@@ -214,130 +208,119 @@
       position: relative;
       cursor: pointer;
       .search-type-img {
-        width: calc(@searchBarHeight / 3 * 2);
-        height: calc(@searchBarHeight / 3 * 2);
+        width: 3.5rem;
+        height: 3.5rem;
         border-radius: 50%;
       }
       .popover {
-        width: @searchBarLeftWidth;
-        padding: 15px;
+        width: 100%;
+        padding: 10%;
         background-color: white;
         position: absolute;
-        top: -15px; // 和padding-top有关
+        top: -10%; // 和padding-top有关
         z-index: 999;
-        border-radius: 16px;
-        box-shadow: rgba(0, 0, 0, 0.12) 0px 4px 19px 0px;
+        border-radius: 1rem;
+        box-shadow: rgba(0, 0, 0, 0.2) 0rem 1rem 4rem 0rem;
         .popover-body {
           .popover-item {
             box-sizing: border-box;
-            padding: 10px;
+            text-align: center;
+            padding: 10%;
             img {
-              width: 60px;
-              height: 60px;
+              width: 3.5rem;
+              height: 3.5rem;
             }
           }
           .popover-active {
-            transform: scale(1.3);
-            box-shadow: rgba(1,175,253, 1) 0px 3px 15px 0px;
+            transform: scale(1.2);
+            box-shadow: rgba(1,175,253, 1) 0em 0rem 1.5rem 0em;
           }
         }
       }
     }
     .search-input-wrapper {
-      width: calc(100% - @searchBarLeftWidth - @searchBarRightWidth);
+      flex: 1;
       background-color: white;
-      height: @searchBarHeight;
+      height: 100%;
       position: relative;
       .search-input {
         vertical-align: middle;
-        height: @searchBarHeight;
-        width: calc(100% - 50px);
+        width: 100%;
+        height: 100%;
         box-sizing: border-box;
         background-color: rgb(255, 255, 255);
         border: none;
         outline: none;
-        font-weight: 300;
-        padding: 0 20px;
-        font-size: 30px;
+        padding-right: 3.4rem;
+        font-size: 1.8rem;
         color: rgb(51, 51, 51);
       }
       .clear-icon {
-        width: calc(@searchBarHeight / 1.5);
-        height: calc(@searchBarHeight / 1.5);
+        width: 3rem;
+        height: 3rem;
         position: absolute;
         top: 50%;
         transform: translateY(-50%);
-        right: 20px;
+        right: 0.2rem;
         cursor: pointer;
       }
     }
-    .search-button-concise {
-      background-color: black;
-    }
-    .search-button-colorful {
-      background: linear-gradient(90deg,#f441a5,#FF7F00,#ffeb3b,#17ff17,#45fffc,#03a9f4,#b661fd,#f441a5);
-      background-size: 400%;
-      animation: sun 10s linear infinite;
-      @keyframes sun{
-        100%{
-          background-position: 400% 0;
-        }
-      }
-    }
     .search-button {
-      min-width: @searchBarRightWidth;
-      max-width: @searchBarRightWidth;
-      height: @searchBarHeight;
+      width: 10%;
+      height: 100%;
       border-radius: 0 50% 50% 0;
       border: none;
       padding: 0;
       position: relative;
       cursor: pointer;
-      .search-button-mask {
-        // position: absolute;
-        min-width: @searchBarRightWidth;
-        max-width: @searchBarRightWidth;
-        height: @searchBarHeight;
-        border-radius: 0 50% 50% 0;
-        backdrop-filter: blur(20px);
-      }
       .search-icon {
-        color: white;
-        font-size: calc(@searchBarHeight / 2);
         position: absolute;
-        width: 60%;
-        height: 60%;
+        width: 3rem;
+        height: 3rem;
         left: 50%;
         top: 50%;
         transform: translate(-50%, -50%);
       }
     }
-    // .search-button:hover{
-    //   animation: sun 10s linear infinite;
-    // }
+    .search-button-concise {
+      height: 100%;
+      background-color: black;
+    }
+    .search-button-colorful {
+      height: 100%;
+      background: linear-gradient(90deg,#f441a5,#FF7F00,#ffeb3b,#17ff17,#45fffc,#03a9f4,#b661fd,#f441a5);
+      background-size: 400%;
+      animation: sun 10s linear infinite;
+    }
+    .search-button:hover{
+      background: linear-gradient(90deg,#f441a5,#FF7F00,#ffeb3b,#17ff17,#45fffc,#03a9f4,#b661fd,#f441a5);
+      background-size: 400%;
+      animation: sun 10s linear infinite;
+    }
+    @keyframes sun{
+      100%{
+        background-position: 400% 0;
+      }
+    }
     .recommend-content {
       width: 100%;
       top: 110%;
       position: absolute;
       background-color: white;
-      border-radius: 30px;
-      box-shadow: rgba(0, 0, 0, 0.12) 0px 4px 19px 0px;
+      border-radius: 1.5rem;
+      box-shadow: rgba(0, 0, 0, 0.2) 0rem 1rem 4rem 0rem;
       z-index: 999;
+      overflow: hidden;
       .recommend-content-item {
         cursor: pointer;
-        height: @recommendItemHeight;
-        line-height: @recommendItemHeight;
-        padding-left: calc(@searchBarLeftWidth + 20px);
-        font-size: calc(@recommendItemHeight / 2.5);
+        height: 2rem;
+        line-height: 2rem;
+        padding: 0.4rem 0;
+        padding-left: 4.5rem;
+        font-size: 1.2rem;
       }
       .recommend-content-item:hover {
         background-color: rgb(230,230,230);
-      }
-      .recommend-content-item:first-child:hover {
-        border-radius: 30px 30px 0 0;
-      }
-      .recommend-content-item:last-child:hover {
-        border-radius: 0 0 30px 30px;
       }
     }
   }

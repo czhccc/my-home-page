@@ -24,19 +24,14 @@
       <ConveyerBelt />
     </div> -->
     
-      <!-- <div class="BallStairs-wrapper">
-        <BallStairs />
-      </div> -->
-    
     <!-- <div class="ThreeSquare-wrapper">
       <ThreeSquare />
     </div> -->
-
+    
     <!-- <div class="WaveAndFish-wrapper">
-      <iframe class="WaveAndFish" src="./static/waveAndFish.html" frameborder="no"></iframe>
+      <WaveAndFish />
     </div> -->
     
-
   </div>
 </template>
 
@@ -46,8 +41,8 @@
   import HelixLoader from './components/HelixLoader/HelixLoader.vue'
   import ColorfulCircle from './components/ColorfulCircle/ColorfulCircle.vue'
   import ConveyerBelt from './components/ConveyerBelt/ConveyerBelt.vue'
-  import BallStairs from './components/BallStairs/BallStairs.vue'
   import ThreeSquare from './components/ThreeSquare/ThreeSquare.vue'
+  import WaveAndFish from './components/WaveAndFIsh/WaveAndFish.vue'
   
   import { computed } from 'vue'
   import { useState } from '../../store/useMapper'
@@ -104,12 +99,6 @@
     position: absolute;
     left: 300px;
     top: 400px;
-  }
-  
-  .BallStairs-wrapper {
-    position: absolute;
-    left: 900px;
-    top: 500px;
   }
 
   .ThreeSquare-wrapper {

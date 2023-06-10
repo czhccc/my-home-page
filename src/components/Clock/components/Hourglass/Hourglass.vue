@@ -13,8 +13,8 @@
 
 .loader {
   animation: loader 5s cubic-bezier(0.8, 0, 0.2, 1) infinite;
-  height: 40px;
-  width: 41px;
+  height: 4.1rem;
+  width: 4rem;
   @keyframes loader {
     90% {
       transform: rotate(0deg);
@@ -26,11 +26,11 @@
   
   .top {
     animation: top 5s linear infinite;
-    border-top: 20px solid @color;
-    border-right: 20px solid transparent;
-    border-left: 20px solid transparent;
-    height: 0px;
-    width: 1px;
+    border-top: 2rem solid @color;
+    border-right: 2rem solid transparent;
+    border-left: 2rem solid transparent;
+    height: 0rem;
+    width: 0.1rem;
     transform-origin: 50% 100%;
     @keyframes top {
       90% {
@@ -44,11 +44,11 @@
 
   .bottom {
     animation: bottom 5s linear infinite;
-    border-right: 20px solid transparent;
-    border-bottom: 20px solid @color;
-    border-left: 20px solid transparent;
-    height: 0px;
-    width: 1px;
+    border-right: 2rem solid transparent;
+    border-bottom: 2rem solid @color;
+    border-left: 2rem solid transparent;
+    height: 0rem;
+    width: 0.1rem;
     transform: scale(0);
     transform-origin: 50% 100%;
     @keyframes bottom {
@@ -66,18 +66,18 @@
 
   .line {
     animation: line 5s linear infinite;
-    border-left: 1px dotted @color;
-    height: 0px;
-    width: 0px;
+    border-left: 0.1rem solid @color;
+    height: 0rem;
+    width: 0rem;
     position: absolute;
-    top: 20px;
-    left: 20px;
+    top: 2rem;
+    left: 1.95rem;
     @keyframes line {
       10% {
-        height: 20px;
+        height: 2rem;
       }
       100% {
-        height: 20px;
+        height: 1.8rem;
       }
     }
   }

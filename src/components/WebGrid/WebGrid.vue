@@ -82,13 +82,14 @@
   --animate-duration: 0.5s;
 }
 
-@gridTotalWidth: 800px; // 容器的总宽度
-@itemWidth: 100px; // 每一项的宽度
-@rowGap: 40px; // 行间距
-@columnGap: 40px; // 列间距
+@gridTotalWidth: 60vw; // 容器的总宽度
+@itemWidth: 5vw; // 每一项的宽度
+@rowGap: 2vw; // 行间距
+@columnGap: 2vw; // 列间距
 .WebGrid {
   width: 100%;
-  padding-bottom: 100px;
+  padding-bottom: 10vh;
+  -webkit-user-drag: none;
   .items-wrapper {
     width: 100%;
     display: grid;
@@ -96,6 +97,7 @@
     grid-row-gap: @rowGap; // 行间距
     grid-column-gap: @columnGap; // 列间距
     justify-content: space-between;
+    -webkit-user-drag: none;
     .items {
       width: @itemWidth;
       cursor: pointer;
@@ -103,12 +105,13 @@
       flex-direction: column;
       align-items: center;
       transition: all 0.5s;
+      -webkit-user-drag: none;
       .img-wrapper {
         .icon {
-          width: 100%;
-          height: 100%;
+          width: @itemWidth;
+          height: @itemWidth;
           border-radius: 50%;
-          box-shadow: rgba(0, 0, 0, 0.12) 0px 3px 15px 0px;
+          box-shadow: rgba(0, 0, 0, 0.25) 0em 0em 1em 0em;
           user-select: none;
           -webkit-user-drag: none;
         }
@@ -116,24 +119,23 @@
       .name {
         text-align: center;
         display: inline-block;
-        margin-top: 6px;
+        margin-top: 4%;
         font-weight: 700;
-        border-radius: 8px;
-        padding: 0 4px;
-        font-size: 18px;
+        border-radius: 0.6rem;
+        font-size: 0.85rem;
         user-select: none;
         -webkit-user-drag: none;
       }
     }
     .items:hover {
-      transform: scale(1.2);
+      transform: scale(1.3);
       .img-wrapper {
         .icon {
-          box-shadow: rgba(1,175,253, 0.8) 0px 3px 15px 0px;
+          box-shadow: rgba(1,175,253, 0.8) 0em 1em 3em 0em;
         }
       }
       .name {
-        box-shadow: rgba(1,175,253, 0.8) 0px 3px 15px 0px;
+        box-shadow: rgba(1,175,253, 0.8) 0em 1em 3em 0em;
       }
     }
   }
