@@ -16,7 +16,7 @@
       </div>
     </div>
     <Sidebar />
-    <!-- <div class="temporary">剩余功能：<br/>生日提醒、<br/>眼睛倒计时、<br/>随机警醒句子</div> -->
+    <!-- <div class="temporary">剩余功能：<br/>生日提醒、<br/>随机警醒句子</div> -->
   </div>
 </template>
 

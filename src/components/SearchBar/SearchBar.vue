@@ -73,7 +73,6 @@
   let searchParam = ref('')
 
   let recommendList = ref([])
-  let lastRecommendList = ref([])
   let isInRecommend = ref(false)
 
   let isShowLeftPopover = ref(false)
@@ -89,9 +88,9 @@
     //定义回调函数
     window.baidu = {
       sug: function(json) {
-        console.log(json)
-        recommendList.value = json.s
-        lastRecommendList.value = json.s
+        if (json.s.length !== 0) {
+          recommendList.value = json.s
+        }
       }
     }
   })
@@ -105,7 +104,7 @@
   })
 
   function getRecommendSearchList(param) { // 百度关键字推荐接口
-    var sugurl = `http://suggestion.baidu.com/su?wd=${param}&cb=window.baidu.sug`
+    var sugurl = `http://suggestion.baidu.com/su?p=3&ie=UTF-8&cb=&wd=${param}&cb=window.baidu.sug`
     var script = document.createElement("script")
     script.src = sugurl
     script.id = 'recommendScript'
@@ -144,7 +143,6 @@
   function searchInputFocus() { // 搜索框重新获取焦点
     if (searchParam.value) {
       getRecommendSearchList(searchParam.value)
-      recommendList.value = lastRecommendList.value
     }
   }
   function searchInputBlur() { // 搜索框失去焦点
@@ -153,7 +151,7 @@
     }
   }
   function searchInputKeydown(e) { // 搜索框监听键盘事件
-    if (e.code === 'Enter') {
+    if (e.code === 'Enter' && !e.isComposing) {
       toSearch()
     }
   }
