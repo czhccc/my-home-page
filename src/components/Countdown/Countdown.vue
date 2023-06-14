@@ -3,7 +3,9 @@
     <div class="clock-wrap">
       <div class="clock pro-0">
         <span class="count"></span>
-        <div><BallStairs class="BallStairs" /></div>
+        <div v-if="!storeState.isPoorMode.value">
+          <BallStairs class="BallStairs" />
+        </div>
       </div>
     </div>
     <div class="action">
@@ -29,6 +31,9 @@
 import BallStairs from './BallStairs/BallStairs.vue'
 import $ from 'jquery';
 import { onMounted } from 'vue';
+import { useState } from '../../store/useMapper'
+
+const storeState = useState(['isPoorMode'])
 
 let $step = 1;
 let $loops = Math.round(100 / $step);

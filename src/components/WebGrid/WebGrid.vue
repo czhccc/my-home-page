@@ -11,7 +11,7 @@
           <div class="img-wrapper">
             <img class="icon" :src="item.iconUrl" alt="">
           </div>
-          <div class="name" :style="{color: storeState.isConciseMode.value ? 'black' : 'white'}">{{item.name}}</div>
+          <div class="name" :style="{color: storeState.isFancifulMode.value ? 'white' : 'black'}">{{item.name}}</div>
         </div>
       </div>
       <div class="items-wrapper" v-else>
@@ -19,7 +19,7 @@
           <div class="img-wrapper">
             <img class="icon" :src="item.iconUrl" alt="">
           </div>
-          <div class="name" :style="{color: storeState.isConciseMode.value ? 'black' : 'white'}">{{item.name}}</div>
+          <div class="name" :style="{color: storeState.isFancifulMode.value ? 'white' : 'black'}">{{item.name}}</div>
         </div>
       </div>
     </transition>
@@ -30,7 +30,7 @@
   import { onMounted, ref } from "vue";
   import { useState } from '../../store/useMapper';
 
-  const storeState = useState(['isConciseMode'])
+  const storeState = useState(['isFancifulMode'])
 
   let animationDuration = ref(500) // 要改的话记得改CSS的动画持续时间
   let isInInterval = ref(false)

@@ -31,17 +31,13 @@
   import { onMounted, ref } from 'vue'
 
   import { useState } from './store/useMapper'
-  const storeState = useState(['isConciseMode'])
+  const storeState = useState(['isFancifulMode'])
 
-  let backgroundImgs = ref({
-    space: '../src/assets/images/back-imgs/space.jpg',
-    niyan: '../src/assets/images/back-imgs/niyan.jpg',
-  })
   function getBackgroundImg() {
-    if (storeState.isConciseMode.value) {
-      return new URL('../src/assets/images/back-imgs/niyan.jpg', import.meta.url).href
-    } else {
+    if (storeState.isFancifulMode.value) {
       return new URL('../src/assets/images/back-imgs/space.jpg', import.meta.url).href
+    } else {
+      return new URL('../src/assets/images/back-imgs/niyan.jpg', import.meta.url).href
     }
   }
 
@@ -64,7 +60,6 @@
 @import url("normalize.css");
 
 .main-wrap {
-  // background-size: 100% 100%;
   background-repeat: no-repeat;
   background-size: cover;
   background-position: center;

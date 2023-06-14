@@ -38,10 +38,10 @@
              @click="clear" v-show="searchParam"
         >
       </div>
-      <button class="search-button search-button-concise" v-if="storeState.isConciseMode.value" @click="e => toSearch()">
+      <button class="search-button search-button-concise" v-if="!storeState.isFancifulMode.value" @click="e => toSearch()">
         <img class="search-icon" src="../../assets/images/seachBar-icons/search-icon.png" alt="">
       </button>
-      <button class="search-button search-button-colorful" v-if="!storeState.isConciseMode.value" @click="e => toSearch()">
+      <button class="search-button search-button-fanciful" v-if="storeState.isFancifulMode.value" @click="e => toSearch()">
         <img class="search-icon" src="../../assets/images/seachBar-icons/search-icon.png" alt="">
       </button>
       <div class="recommend-content" id="recommend-content" v-if="searchParam" @mouseenter="recommendMoseenter" @mouseleave="recommendMoseleave">
@@ -78,7 +78,7 @@
   let isShowLeftPopover = ref(false)
   let duringAnimateAndPreventDisappear = ref(false) // leftPopover添加了旋转出现的动画，旋转而变成一条线时鼠标移动会触发mouse
 
-  const storeState = useState(['isConciseMode'])
+  const storeState = useState(['isFancifulMode'])
 
   onBeforeMount(() => {
     currentSearchTypeIcon.value = searchTypeIconList.value[0].url
@@ -284,7 +284,7 @@
       height: 100%;
       background-color: black;
     }
-    .search-button-colorful {
+    .search-button-fanciful {
       height: 100%;
       background: linear-gradient(90deg,#f441a5,#FF7F00,#ffeb3b,#17ff17,#45fffc,#03a9f4,#b661fd,#f441a5);
       background-size: 400%;

@@ -5,34 +5,34 @@
       <div class="mask" @mouseenter="maskMouseEnter"></div>
       <div class="content">
         <ul>
-          <li style="--clr:#ff6493" @click="changeConciseMode">
-            <a href="#" data-text="&nbsp;简约模式" :style="{
-              '--activeWidth': storeState.isConciseMode.value?'100%':'0%', 
-              '--activeShadow': storeState.isConciseMode.value?'drop-shadow(0 0 1rem var(--clr))':'unset',
-              '--activeAndHoverWidth': storeState.isConciseMode.value?'100%':'50%'
-            }">&nbsp;简约模式&nbsp;</a>
+          <li style="--clr:#ff6493" @click="changeFancifulMode">
+            <a href="#" data-text="&nbsp;FancifulMode" :style="{
+              '--activeWidth': storeState.isFancifulMode.value?'100%':'0%', 
+              '--activeShadow': storeState.isFancifulMode.value?'drop-shadow(0 0 1rem var(--clr))':'unset',
+              '--activeAndHoverWidth': storeState.isFancifulMode.value?'100%':'50%'
+            }">&nbsp;FancifulMode&nbsp;</a>
+          </li>
+          <li style="--clr:#dc00d4" @click="changePoorMode">
+            <a href="#" data-text="&nbsp;PoorMode" :style="{
+              '--activeWidth': storeState.isPoorMode.value?'100%':'0%', 
+              '--activeShadow': storeState.isPoorMode.value?'drop-shadow(0 0 1rem var(--clr))':'unset',
+              '--activeAndHoverWidth': storeState.isPoorMode.value?'100%':'50%'
+            }">&nbsp;PoorMode&nbsp;</a>
           </li>
           <li style="--clr:#ffdd1c" @click="showWave">
-            <a href="#" data-text="&nbsp;波浪特效" :style="{
+            <a href="#" data-text="&nbsp;ShowWave" :style="{
               '--activeWidth': storeState.isShowWave.value?'100%':'0%', 
               '--activeShadow': storeState.isShowWave.value?'drop-shadow(0 0 1rem var(--clr))':'unset',
               '--activeAndHoverWidth': storeState.isShowWave.value?'100%':'50%'
-            }">&nbsp;波浪特效&nbsp;</a>
+            }">&nbsp;ShowWave&nbsp;</a>
           </li>
           <li style="--clr:#00dc82" @click="showWaveAndFish">
-            <a href="#" data-text="&nbsp;养鱼特效" :style="{
+            <a href="#" data-text="&nbsp;ShowFish" :style="{
               '--activeWidth': storeState.isShowWaveAndFish.value?'100%':'0%', 
               '--activeShadow': storeState.isShowWaveAndFish.value?'drop-shadow(0 0 1rem var(--clr))':'unset',
               '--activeAndHoverWidth': storeState.isShowWaveAndFish.value?'100%':'50%'
-            }">&nbsp;养鱼特效&nbsp;</a>
+            }">&nbsp;ShowFish&nbsp;</a>
           </li>
-          <!-- <li style="--clr:#dc00d4" @click="CCCCMode">
-            <a href="#" data-text="&nbsp;CCCC" :style="{
-              '--activeWidth': isCCCCMode?'100%':'0%', 
-              '--activeShadow': isCCCCMode?'drop-shadow(0 0 1rem var(--clr))':'unset',
-              '--activeAndHoverWidth': isCCCCMode?'100%':'50%'
-            }">&nbsp;CCCC&nbsp;</a>
-          </li> -->
         </ul>
       </div>
     </div>
@@ -45,23 +45,23 @@
   import { useStore } from "vuex";
   import { useState } from '../../store/useMapper'
 
-  let { state, commit } = useStore()
+  let { commit } = useStore()
 
   let isShowSidebar = ref(false)
 
-  const storeState = useState(['isConciseMode', 'isShowWave', 'isShowWaveAndFish'])
+  const storeState = useState(['isFancifulMode', 'isPoorMode', 'isShowWave', 'isShowWaveAndFish'])
 
-  function changeConciseMode() {
-    commit('changeConciseMode')
+  function changeFancifulMode() {
+    commit('changeFancifulMode')
+  }
+  function changePoorMode() {
+    commit('changePoorMode')
   }
   function showWave() {
     commit('showWave')
   }
   function showWaveAndFish() {
     commit('showWaveAndFish')
-  }
-  function CCCCMode() {
-    isCCCCMode.value = !isCCCCMode.value
   }
 
   function maskMouseEnter() {
@@ -73,6 +73,13 @@
 </script>
 
 <style scoped lang="less">
+@hiddenAreaWidth: 2vw;
+@hiddenAreaHeight: 50vh;
+@contentWidth: 25vw;
+@contentPadding: 2vw;
+@ulGap: 0.2rem;
+@fontSize: 2.6rem;
+@lineHeight: 3.2rem;
 .Sidebar {
   position: fixed;
   right: 0;
@@ -89,34 +96,34 @@
     align-items: center;
     z-index: 999;
     .content {
-      width: 25vw;
+      width: @contentWidth;
       height: 100%;
       backdrop-filter: blur(0.5rem);
       background-color: rgba(230, 235, 240, .95);
       box-sizing: border-box;
       box-shadow: 0 0 0.6rem rgba(0, 0, 0, .05);
-      padding: 2vw;
+      padding: @contentPadding;
       box-sizing: border-box;
       ul {
         position: relative;
         display: flex;
         flex-direction: column;
-        gap: 0.2rem;
+        gap: @ulGap;
         padding-left: 0;
         li {
           list-style: none;
           position: relative;
           a {
             position: relative;
-            font-size: 3rem;
-            line-height: 3.2rem;
+            font-size: @fontSize;
+            line-height: @lineHeight;
             text-decoration: none;
             letter-spacing: 0.2rem;
             color: transparent;
             -webkit-text-stroke: 0.05rem rgba(0, 0, 0, 0.5);
           }
           a::before {
-            line-height: 3.2rem;
+            line-height: @lineHeight;
             content: attr(data-text);
             position: absolute;
             color: var(--clr);
@@ -148,8 +155,8 @@
     }
   }
   .hiddenArea {
-    width: 2vw;
-    height: 50vh;
+    width: @hiddenAreaWidth;
+    height: @hiddenAreaHeight;
     position: fixed;
     right: 0;
     top: 50%;

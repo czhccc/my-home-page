@@ -2,7 +2,7 @@
   <div class="BackAnimation">
 
     <!-- 流星 -->
-    <div v-if="!storeState.isConciseMode.value" class="Meteor-wrapper">
+    <div v-if="storeState.isFancifulMode.value" class="Meteor-wrapper">
       <Meteor />
     </div>
 
@@ -48,7 +48,7 @@
   import { computed } from 'vue'
   import { useState } from '../../store/useMapper'
 
-  const storeState = useState(['isConciseMode', 'isShowWave', 'isShowWaveAndFish'])
+  const storeState = useState(['isFancifulMode', 'isShowWave', 'isShowWaveAndFish'])
 
 
 </script>

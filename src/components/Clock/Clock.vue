@@ -2,16 +2,16 @@
   <div class="Clock"
        ref="Clock"
        :style="{
-          backgroundColor: storeState.isConciseMode.value ? 'rgba(30, 30, 30, 0.2)' : 'rgba(255, 255, 255, 0.5)',
-          borderRadius: storeState.isConciseMode.value ? '16px' : ''
+          backgroundColor: storeState.isFancifulMode.value ? 'rgba(255, 255, 255, 0.5)' : 'rgba(30, 30, 30, 0.2)',
+          borderRadius: storeState.isFancifulMode.value ? '' : '16px'
   }">
     <canvas id="canvas" width="220" height="220">
       你的浏览器不支持该元素！赶紧下载最新版本浏览器或使用其他浏览器！
     </canvas>
-    <div v-if="storeState.isConciseMode.value" class="text-wrapper-concise">
+    <div v-if="!storeState.isFancifulMode.value" class="text-wrapper-concise">
       {{thisYearPassedDays}} ~ {{365-thisYearPassedDays}} ~ {{utilAge29Days}}
     </div>
-    <div v-if="!storeState.isConciseMode.value" class="text-wrapper-colorful">
+    <div v-if="storeState.isFancifulMode.value" class="text-wrapper-fanciful">
       <span class="text text1">{{thisYearPassedDays}}</span>
       ~ 
       <span class="text text2">{{365-thisYearPassedDays}}</span>
@@ -24,13 +24,13 @@
     </div> -->
 
     <!-- border动画 -->
-    <span class="bg-span-1" v-if="!storeState.isConciseMode.value"></span>
-    <span class="bg-span-2" v-if="!storeState.isConciseMode.value"></span>
-    <span class="bg-span-3" v-if="!storeState.isConciseMode.value"></span>
-    <span class="bg-span-4" v-if="!storeState.isConciseMode.value"></span>
+    <span class="bg-span-1" v-if="storeState.isFancifulMode.value"></span>
+    <span class="bg-span-2" v-if="storeState.isFancifulMode.value"></span>
+    <span class="bg-span-3" v-if="storeState.isFancifulMode.value"></span>
+    <span class="bg-span-4" v-if="storeState.isFancifulMode.value"></span>
 
     <!-- 沙漏 -->
-    <div class="hourglass-wrapper" :style="{height: ClockWidth+'px'}">
+    <div class="hourglass-wrapper" v-if="!storeState.isPoorMode.value" :style="{height: ClockWidth+'px'}">
       <Hourglass />
     </div>
     
@@ -47,7 +47,7 @@
   let Clock = ref(null)
   let ClockWidth = ref(0)
 
-  const storeState = useState(['isConciseMode'])
+  const storeState = useState(['isFancifulMode', 'isPoorMode'])
 
   onMounted(() => {
     drowClock()
@@ -178,7 +178,7 @@
     font-weight: bold;
     font-size: 1.4rem;
   }
-  .text-wrapper-colorful {
+  .text-wrapper-fanciful {
     .text {
       font-weight: bold;
       color: black;
